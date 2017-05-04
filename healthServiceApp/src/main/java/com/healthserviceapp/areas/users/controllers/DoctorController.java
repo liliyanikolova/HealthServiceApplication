@@ -2,6 +2,7 @@ package com.healthserviceapp.areas.users.controllers;
 
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBidingModel;
+import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
 import com.healthserviceapp.areas.users.models.viewModels.TitleViewModel;
 import com.healthserviceapp.areas.users.services.SpecialityService;
 import com.healthserviceapp.areas.users.services.TitleService;
@@ -31,6 +32,11 @@ public class DoctorController {
     @ModelAttribute("titles")
     public Set<TitleViewModel> titles(){
         return this.titleService.getAllTitles();
+    }
+
+    @ModelAttribute("specialities")
+    public Set<SpecialityViewModel> getSpecialityNames(){
+        return this.specialityService.getAllSpecialities();
     }
 
     @GetMapping("/register")
