@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.patient.services;
 
+import com.healthserviceapp.areas.patient.entities.Patient;
 import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBidingModel;
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
@@ -20,5 +21,7 @@ public interface PatientService {
     List<BasicPatientViewModel> getLoggedDoctorPatients(User user);
 
     boolean doesEgnExist(String egn);
+
+    Patient findPatientByEgn(String egn);
 
 }

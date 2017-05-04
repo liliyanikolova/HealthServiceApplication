@@ -3,6 +3,8 @@ package com.healthserviceapp.areas.patient.models.bindingModels;
 import com.healthserviceapp.areas.patient.customValidations.IsEgnUnique;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Size;
+
 public class AddPatientBidingModel {
 
     @NotEmpty(message = "Въведете РЗОК No.")
@@ -13,6 +15,7 @@ public class AddPatientBidingModel {
 
     @IsEgnUnique
     @NotEmpty(message = "Въведете ЕГН")
+    @Size(min = 10, max = 10, message = "Невалидно ЕГН")
     private String egn;
 
     @NotEmpty(message = "Въведете име")

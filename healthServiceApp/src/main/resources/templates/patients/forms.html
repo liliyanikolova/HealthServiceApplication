@@ -121,5 +121,16 @@
     <a class="btn btn-warning" th:href="|/patients|">Откажи</a>
 </form>
 
+<form method="post" th:fragment="search-form" th:object="${searchPatientBidingModel}">
+    <div class="form-group" th:classappend="${#fields.hasErrors('egn')}? 'has-danger'">
+        <label for="egnId">Единен Граждански Номер (ЕГН)</label>
+        <input type="text" class="form-control" id="egnId" aria-describedby="egnHelp" name="egn" th:field="*{egn}"/>
+        <small><div id="egnHelp" class="form-control-feedback" th:each="error : ${#fields.errors('egn')}" th:text="${error}">Error Message</div></small>
+    </div>
+
+    <button type="submit" class="btn btn-success">Търси</button>
+    <a class="btn btn-warning" th:href="|/patients|">Откажи</a>
+</form>
+
 </body>
 </html>

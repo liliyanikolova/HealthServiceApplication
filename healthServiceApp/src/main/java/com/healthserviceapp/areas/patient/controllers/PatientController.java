@@ -1,7 +1,9 @@
 package com.healthserviceapp.areas.patient.controllers;
 
+import com.healthserviceapp.areas.patient.entities.Patient;
 import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBidingModel;
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
+import com.healthserviceapp.areas.patient.models.bindingModels.SearchPatientBidingModel;
 import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
 import com.healthserviceapp.areas.patient.services.PatientService;
 import com.healthserviceapp.areas.users.entities.User;
@@ -74,4 +76,23 @@ public class PatientController {
         return "redirect:/patients";
     }
 
+    @GetMapping("/search")
+    public String getSearchPatientPage(@ModelAttribute SearchPatientBidingModel searchPatientBidingModel){
+        return "patients/search";
+    }
+
+    @PostMapping("/search")
+    public String searchPatient(@Valid @ModelAttribute SearchPatientBidingModel searchPatientBidingModel, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "patients/search";
+        }
+
+        String egn = searchPatientBidingModel.getEgn();
+        if (this.patientService.doesEgnExist(egn)){
+            Long id = this.patientService.findPatientByEgn(egn).getId();
+            return "redirect:/patients/edit/" + id;
+        }
+
+        return "redirect:/patients/add";
+    }
 }

@@ -93,4 +93,11 @@ public class PatientServiceImpl implements PatientService {
 
         return false;
     }
+
+    @Override
+    public Patient findPatientByEgn(String egn) {
+        Patient patient = this.patientRepository.findByEgn(egn);
+
+        return patient;
+    }
 }
