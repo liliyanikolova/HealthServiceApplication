@@ -6,6 +6,9 @@ import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindin
 import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
 import com.healthserviceapp.areas.patient.repositories.PatientRepository;
 import com.healthserviceapp.areas.patient.services.PatientService;
+import com.healthserviceapp.areas.users.entities.Doctor;
+import com.healthserviceapp.areas.users.entities.User;
+import com.healthserviceapp.areas.users.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +21,25 @@ public class PatientServiceImpl implements PatientService {
 
     private PatientRepository patientRepository;
 
+    private UserRepository userRepository;
+
     private ModelMapper modelMapper;
 
     @Autowired
-    public PatientServiceImpl(PatientRepository patientRepository, ModelMapper modelMapper) {
+    public PatientServiceImpl(PatientRepository patientRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.patientRepository = patientRepository;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
     @Override
-    public void add(AddPatientBidingModel addPatientBidingModel) {
+    public void add(AddPatientBidingModel addPatientBidingModel, User user) {
         Patient patient = this.modelMapper.map(addPatientBidingModel, Patient.class);
 
-        this.patientRepository.saveAndFlush(patient);
+        Doctor doctor = (Doctor) user;
+        doctor.getPatients().add(patient);
+
+        this.userRepository.save(doctor);
     }
 
     @Override

@@ -38,12 +38,6 @@ public class Patient {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Protocol> protocols;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"))
-    private Set<Doctor> doctors;
-
     public Patient() {
     }
 
@@ -133,14 +127,6 @@ public class Patient {
 
     public void setProtocols(Set<Protocol> protocols) {
         this.protocols = protocols;
-    }
-
-    public Set<Doctor> getDoctors() {
-        return doctors;
-    }
-
-    public void setDoctors(Set<Doctor> doctors) {
-        this.doctors = doctors;
     }
 
 }

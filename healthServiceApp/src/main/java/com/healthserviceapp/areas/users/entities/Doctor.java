@@ -37,7 +37,7 @@ public class Doctor extends User{
             inverseJoinColumns = @JoinColumn(name = "speciality_id", referencedColumnName = "id"))
     private Set<Speciality> specialities;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"))

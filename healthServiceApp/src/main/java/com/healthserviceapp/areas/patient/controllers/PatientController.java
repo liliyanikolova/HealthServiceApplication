@@ -4,8 +4,10 @@ import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBidingM
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
 import com.healthserviceapp.areas.patient.services.PatientService;
+import com.healthserviceapp.areas.users.entities.User;
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,9 +46,11 @@ public class PatientController {
             return "register";
         }
 
-        this.patientService.add(addPatientBidingModel);
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return "redirect:patients/all";
+        this.patientService.add(addPatientBidingModel, loggedUser);
+
+        return "redirect:/patients";
     }
 
     @GetMapping("/edit/{id}")
@@ -67,6 +71,6 @@ public class PatientController {
         this.patientService.save(editPatientBindingModel);
 
         //TODO Redirect to all doctor patients
-        return "redirect:patients/all";
+        return "redirect:/patients";
     }
 }
