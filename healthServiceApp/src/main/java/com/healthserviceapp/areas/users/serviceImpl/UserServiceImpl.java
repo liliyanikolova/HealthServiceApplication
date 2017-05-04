@@ -2,7 +2,6 @@ package com.healthserviceapp.areas.users.serviceImpl;
 
 import com.healthserviceapp.areas.common.utils.Constants;
 import com.healthserviceapp.areas.users.entities.*;
-import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBidingModel;
 import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
 import com.healthserviceapp.areas.users.models.viewModels.TitleViewModel;
@@ -87,32 +86,5 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
-    }
-
-    @Override
-    public EditDoctorBidingModel findDoctorById(Long id) {
-        User user = this.userRepository.findOne(id);
-        EditDoctorBidingModel editDoctorBidingModel = this.modelMapper.map(user, EditDoctorBidingModel.class);
-
-        return editDoctorBidingModel;
-    }
-
-    @Override
-    public void save(EditDoctorBidingModel editDoctorBidingModel) {
-        Doctor doctor = new Doctor();
-        doctor.setFirstName(editDoctorBidingModel.getFirstName());
-        doctor.setLastName(editDoctorBidingModel.getLastName());
-        doctor.setUin(editDoctorBidingModel.getUin());
-
-        Role role = this.roleRepository.findOneByAuthority(Constants.DOCTOR_ROLE);
-        doctor.addRole(role);
-
-        Title title = this.titleRepository.findByName(editDoctorBidingModel.getTitle());
-        doctor.setTitle(title);
-
-        Set<Speciality> specialities = this.specialityRepository.findAllByNameIn(editDoctorBidingModel.getSpecialities());
-        doctor.setSpecialities(specialities);
-
-        this.userRepository.save(doctor);
     }
 }

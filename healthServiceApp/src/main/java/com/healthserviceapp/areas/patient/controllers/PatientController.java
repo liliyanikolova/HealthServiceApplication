@@ -1,18 +1,17 @@
 package com.healthserviceapp.areas.patient.controllers;
 
 import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBidingModel;
-import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
-import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
 import com.healthserviceapp.areas.patient.services.PatientService;
-import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
+import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBidingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/patients")
@@ -25,17 +24,9 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @GetMapping("")
-    public String getAllPatientsPage(Model model){
-        List<BasicPatientViewModel> basicPatientViewModels = this.patientService.getAllPatients();
-        model.addAttribute("basicPatientViewModels", basicPatientViewModels);
-
-        return "patients/all";
-    }
-
     @GetMapping("/add")
     public String getAddPatientPage(@ModelAttribute AddPatientBidingModel addPatientBidingModel){
-        return "patients/add";
+        return "patient/add";
     }
 
     @PostMapping("/add")
@@ -46,27 +37,6 @@ public class PatientController {
 
         this.patientService.add(addPatientBidingModel);
 
-        return "redirect:patients/all";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String getEditPatientPage(@PathVariable Long id, Model model){
-        EditPatientBindingModel editPatientBindingModel = this.patientService.findPatientById(id);
-        model.addAttribute(editPatientBindingModel);
-
-        return "patients/edit";
-    }
-
-    @PostMapping("/edit/{id}")
-    public String editPatient(@Valid @ModelAttribute EditPatientBindingModel editPatientBindingModel, @PathVariable Long id, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "patients/edit";
-        }
-
-        editPatientBindingModel.setId(id);
-        this.patientService.save(editPatientBindingModel);
-
-        //TODO Redirect to all doctor patients
-        return "redirect:patients/all";
+        return "redirect:/";
     }
 }
