@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.users.controllers;
 
+import com.healthserviceapp.areas.users.entities.User;
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBidingModel;
 import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
@@ -8,6 +9,7 @@ import com.healthserviceapp.areas.users.services.SpecialityService;
 import com.healthserviceapp.areas.users.services.TitleService;
 import com.healthserviceapp.areas.users.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,4 +75,12 @@ public class DoctorController {
 //        this.userService.save(editDoctorBidingModel);
 //        return "redirect:/";
 //    }
+
+
+    @GetMapping("/delete/patient/{id}")
+    public String deleteVirus(@PathVariable Long id, Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        this.userService.deletePatientById(id, user);
+        return "redirect:/patients";
+    }
 }

@@ -71,7 +71,7 @@ public class PatientController {
         editPatientBindingModel.setId(id);
         this.patientService.save(editPatientBindingModel);
 
-        //TODO Redirect to all doctor patients
         return "redirect:/patients";
     }
+
 }

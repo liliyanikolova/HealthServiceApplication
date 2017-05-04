@@ -14,7 +14,7 @@
     <br/>
     <div class="container">
         <br/>
-        <h1>Всички пациенти</h1>
+        <h1>Вашите пациенти</h1>
         <br/>
         <table class="table">
             <thead>
@@ -35,7 +35,7 @@
                     <a class="btn btn-warning" th:href="|/patients/edit/*{id}|">Редактирай</a>
                 </td>
                 <td>
-                    <a class="btn btn-warning" th:href="|/patients/delete/*{id}|">Изтрий</a>
+                    <a class="btn btn-warning" onClick="if(!confirm('Сигурни ли сте?')) {return false;}" th:href="|/doctor/delete/patient/*{id}|">Изтрий</a>
                 </td>
             </tr>
             </tbody>

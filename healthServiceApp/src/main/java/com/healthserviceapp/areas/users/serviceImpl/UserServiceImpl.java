@@ -1,6 +1,7 @@
 package com.healthserviceapp.areas.users.serviceImpl;
 
 import com.healthserviceapp.areas.common.utils.Constants;
+import com.healthserviceapp.areas.patient.entities.Patient;
 import com.healthserviceapp.areas.users.entities.*;
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBidingModel;
@@ -21,7 +22,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -114,5 +117,15 @@ public class UserServiceImpl implements UserService {
         doctor.setSpecialities(specialities);
 
         this.userRepository.save(doctor);
+    }
+
+    @Override
+    public void deletePatientById(Long patientId, User user) {
+        Doctor doctor = (Doctor) user;
+        Set<Patient> patients = doctor.getPatients().stream()
+                                    .filter(p -> p.getId() != patientId)
+                                    .collect(Collectors.toSet());
+        doctor.setPatients(patients);
+        this.userRepository.saveAndFlush(doctor);
     }
 }
