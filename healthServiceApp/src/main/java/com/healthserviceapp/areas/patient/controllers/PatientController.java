@@ -43,7 +43,7 @@ public class PatientController {
     @PostMapping("/add")
     public String addPatient(@Valid @ModelAttribute AddPatientBidingModel addPatientBidingModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "register";
+            return "patients/add";
         }
 
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

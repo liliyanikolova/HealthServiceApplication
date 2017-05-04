@@ -52,7 +52,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void save(EditPatientBindingModel editPatientBindingModel) {
+        String egn = this.patientRepository.findOne(editPatientBindingModel.getId()).getEgn();
         Patient patient = this.modelMapper.map(editPatientBindingModel, Patient.class);
+        patient.setEgn(egn);
         this.patientRepository.saveAndFlush(patient);
     }
 
@@ -66,5 +68,16 @@ public class PatientServiceImpl implements PatientService {
         }
 
         return basicPatientViewModels;
+    }
+
+    @Override
+    public boolean doesEgnExist(String egn) {
+        Patient patient = this.patientRepository.findByEgn(egn);
+
+        if (patient != null){
+            return true;
+        }
+
+        return false;
     }
 }

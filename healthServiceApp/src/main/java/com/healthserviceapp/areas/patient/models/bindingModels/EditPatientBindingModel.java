@@ -12,7 +12,6 @@ public class EditPatientBindingModel {
     @NotEmpty(message = "Въведете здравен район")
     private String healthService;
 
-    @NotEmpty(message = "Въведете ЕГН")
     private String egn;
 
     @NotEmpty(message = "Въведете име")

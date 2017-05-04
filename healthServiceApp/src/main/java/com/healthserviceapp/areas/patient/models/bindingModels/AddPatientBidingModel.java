@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.patient.models.bindingModels;
 
+import com.healthserviceapp.areas.patient.customValidations.IsEgnUnique;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class AddPatientBidingModel {
@@ -10,6 +11,7 @@ public class AddPatientBidingModel {
     @NotEmpty(message = "Въведете здравен район")
     private String healthService;
 
+    @IsEgnUnique
     @NotEmpty(message = "Въведете ЕГН")
     private String egn;
 

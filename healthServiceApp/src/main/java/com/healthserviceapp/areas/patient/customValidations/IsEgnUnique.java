@@ -1,4 +1,4 @@
-package com.healthserviceapp.areas.users.customValidations;
+package com.healthserviceapp.areas.patient.customValidations;
 
 import com.healthserviceapp.areas.common.utils.Messages;
 
@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = IsEmailUniqueValidator.class)
-public @interface IsEmailUnique {
+@Constraint(validatedBy = IsEgnUniqueValidator.class)
+public @interface IsEgnUnique {
 
-    String message() default Messages.EMAIL_EXIST;
+    String message() default Messages.EGN_EXIST;
 
     Class<?>[] groups() default {};
 

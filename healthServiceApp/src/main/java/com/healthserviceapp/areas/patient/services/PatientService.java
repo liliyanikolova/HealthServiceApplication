@@ -16,4 +16,6 @@ public interface PatientService {
     void save(EditPatientBindingModel editPatientBindingModel);
 
     List<BasicPatientViewModel> getAllPatients();
+
+    boolean doesEgnExist(String egn);
 }
