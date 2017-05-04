@@ -3,6 +3,12 @@
 <body>
 
 <form method="post" th:fragment="add-form" th:object="${addPatientBidingModel}">
+    <div class="form-group" th:classappend="${#fields.hasErrors('egn')}? 'has-danger'">
+        <label for="egnId">Единен Граждански Номер (ЕГН)</label>
+        <input type="text" class="form-control" id="egnId" aria-describedby="egnHelp" name="egn" th:field="*{egn}"/>
+        <small id="egnHelp" class="form-control-feedback" th:each="error : ${#fields.errors('egn')}" th:text="${error}">Error Message</small>
+    </div>
+
     <div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-danger'">
         <label for="firstName">Име</label>
         <input type="text" class="form-control" id="firstName" aria-describedby="firstNameHelp" name="firstName" th:field="*{firstName}"/>
@@ -19,12 +25,6 @@
         <label for="lastName">Фамилия</label>
         <input type="text" class="form-control" id="lastName" aria-describedby="lastNameHelp" name="lastName" th:field="*{lastName}"/>
         <small id="lastNameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Error Message</small>
-    </div>
-
-    <div class="form-group" th:classappend="${#fields.hasErrors('egn')}? 'has-danger'">
-        <label for="egnId">Единен Граждански Номер (ЕГН)</label>
-        <input type="text" class="form-control" id="egnId" aria-describedby="egnHelp" name="egn" th:field="*{egn}"/>
-        <small id="egnHelp" class="form-control-feedback" th:each="error : ${#fields.errors('egn')}" th:text="${error}">Error Message</small>
     </div>
 
     <div class="form-group" th:classappend="${#fields.hasErrors('rzokNumber')}? 'has-danger'">
