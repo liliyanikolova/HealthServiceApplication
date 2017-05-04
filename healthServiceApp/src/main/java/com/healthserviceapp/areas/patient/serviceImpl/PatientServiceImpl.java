@@ -71,6 +71,19 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public List<BasicPatientViewModel> getLoggedDoctorPatients(User user) {
+        List<Patient> patients = this.patientRepository.findLoggedDoctorPatients(user.getId());
+        List<BasicPatientViewModel> basicPatientViewModels = new LinkedList<>();
+        for (Patient patient : patients) {
+            BasicPatientViewModel basicPatientViewModel = this.modelMapper.map(patient, BasicPatientViewModel.class);
+            basicPatientViewModels.add(basicPatientViewModel);
+        }
+
+        return basicPatientViewModels;
+    }
+
+
+    @Override
     public boolean doesEgnExist(String egn) {
         Patient patient = this.patientRepository.findByEgn(egn);
 

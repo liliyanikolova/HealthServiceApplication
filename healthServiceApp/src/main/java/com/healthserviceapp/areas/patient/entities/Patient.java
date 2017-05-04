@@ -38,6 +38,9 @@ public class Patient {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Protocol> protocols;
 
+    @ManyToMany(mappedBy = "patients")
+    private Set<Doctor> doctors;
+
     public Patient() {
     }
 
@@ -129,4 +132,11 @@ public class Patient {
         this.protocols = protocols;
     }
 
+    public Set<Doctor> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(Set<Doctor> doctors) {
+        this.doctors = doctors;
+    }
 }

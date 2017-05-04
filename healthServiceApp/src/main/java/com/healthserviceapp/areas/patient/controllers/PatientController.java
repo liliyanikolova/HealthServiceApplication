@@ -29,7 +29,8 @@ public class PatientController {
 
     @GetMapping("")
     public String getAllPatientsPage(Model model){
-        List<BasicPatientViewModel> basicPatientViewModels = this.patientService.getAllPatients();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<BasicPatientViewModel> basicPatientViewModels = this.patientService.getLoggedDoctorPatients(user);
         model.addAttribute("basicPatientViewModels", basicPatientViewModels);
 
         return "patients/all";

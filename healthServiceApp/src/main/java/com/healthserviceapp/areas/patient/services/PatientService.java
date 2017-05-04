@@ -17,5 +17,8 @@ public interface PatientService {
 
     List<BasicPatientViewModel> getAllPatients();
 
+    List<BasicPatientViewModel> getLoggedDoctorPatients(User user);
+
     boolean doesEgnExist(String egn);
+
 }
