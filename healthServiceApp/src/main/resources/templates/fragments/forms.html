@@ -62,6 +62,7 @@
         <div class="form-control-feedback" th:each="error : ${#fields.errors('global')}" th:text="${error}">Sorry, passwords are not matching?</div>
     </div>
     <button type="submit" class="btn btn-success">Запази</button>
+    <a class="btn btn-warning" th:href="|/|">Откажи</a>
 </form>
 
 <form method="post" th:fragment="edit-form" th:object="${editDoctorBidingModel}">
@@ -110,6 +111,7 @@
     </div>
 
     <button type="submit" class="btn btn-success">Запази</button>
+    <a class="btn btn-warning" th:href="|/|">Откажи</a>
 </form>
 
 <form method="post" th:fragment="login-form" th:object="${registerDoctorBidingModel}">
