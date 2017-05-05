@@ -1,24 +1,14 @@
-package com.healthserviceapp.areas.medicine.entities;
+package com.healthserviceapp.areas.medicine.models.viewModels;
 
-import javax.persistence.*;
+public class BasicDozeViewModel {
 
-@Entity
-@Table(name = "dozes")
-public class Doze {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer quantity;
 
     private String measurement;
 
-    @ManyToOne
-    @JoinColumn(name = "medicines")
-    private Medicine medicine;
-
-    public Doze() {
+    public BasicDozeViewModel() {
     }
 
     public Long getId() {
@@ -43,13 +33,5 @@ public class Doze {
 
     public void setMeasurement(String measurement) {
         this.measurement = measurement;
-    }
-
-    public Medicine getMedicine() {
-        return medicine;
-    }
-
-    public void setMedicine(Medicine medicine) {
-        this.medicine = medicine;
     }
 }

@@ -17,3 +17,19 @@ h1{
 th{
     color: #eb9316;
 }
+
+#add-medicine-form input{
+    width: 50%;
+}
+
+#add-medicine-form label{
+    display: block;
+}
+
+.doze-input{
+    margin-bottom: 20px;
+}
+
+.doze-input input{
+    display: inline;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<form id="add-medicine-form" method="post" th:fragment="add-form" th:object="${addMedicineBidingModel}">
+    <div class="form-group" th:classappend="${#fields.hasErrors('code')}? 'has-danger'">
+        <label for="codeId">Код</label>
+        <input type="text" class="form-control" id="codeId" aria-describedby="codeHelp" name="code" th:field="*{code}"/>
+        <small><div id="codeHelp" class="form-control-feedback" th:each="error : ${#fields.errors('code')}" th:text="${error}">Error Message</div></small>
+    </div>
+
+    <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-danger'">
+        <label for="name">Наименование</label>
+        <input type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name" th:field="*{name}"/>
+        <small id="nameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('name')}" th:text="${error}">Error Message</small>
+    </div>
+
+    <div class="form-group">
+        <div class="doze-input">
+            <label>Доза</label>
+            <input type="text" class="form-control" name="dozes[]" th:field="*{dozes}" />
+        </div>
+        <button type="button" class="btn btn-warning" id="btn-add-doze">Добави доза</button>
+    </div>
+
+    <button type="submit" class="btn btn-success">Запази</button>
+    <a class="btn btn-warning" th:href="|/medicines|">Откажи</a>
+
+    <script type="text/javascript">
+        var btn_add_doze    = document.getElementById( 'btn-add-doze' );
+        var btn_remove_doze = document.createElement( 'button' );
+        btn_remove_doze.type      = 'button';
+        btn_remove_doze.innerText = 'Изтрий';
+        btn_remove_doze.classList.add('btn');
+        btn_remove_doze.classList.add('btn-warning');
+
+        var doze_inputs     = document.getElementsByClassName( 'doze-input' );
+        var doze_input_tmpl = doze_inputs[ 0 ];
+
+        btn_add_doze.addEventListener( 'click', addDoze );
+
+        function addDoze () {
+            var doze_input_clone      = doze_input_tmpl.cloneNode( true );
+            var btn_remove_doze_clone = btn_remove_doze.cloneNode( true );
+
+            doze_input_clone.getElementsByTagName( 'label' )[ 0 ].innerText += ' ' + ( 1 + doze_inputs.length );
+            doze_input_clone.getElementsByTagName( 'input' )[ 0 ].value      = '';
+            doze_input_clone.appendChild( btn_remove_doze_clone );
+
+            btn_remove_doze_clone.addEventListener( 'click', deleteDoze.bind( null, doze_input_clone ) );
+
+            btn_add_doze.parentNode.insertBefore( doze_input_clone, btn_add_doze );
+
+            doze_input_clone.getElementsByTagName( 'input' )[ 0 ].focus();
+        }
+
+        function deleteDoze ( doze_input, event ) {
+            doze_input.remove();
+        }
+    </script>
+</form>
+
+</body>
+</html>

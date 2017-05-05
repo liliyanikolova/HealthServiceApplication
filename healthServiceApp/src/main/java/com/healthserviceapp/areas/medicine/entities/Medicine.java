@@ -3,7 +3,9 @@ package com.healthserviceapp.areas.medicine.entities;
 import com.healthserviceapp.areas.protocol.entities.Prescription;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Entity
 @Table(name = "medicines")
@@ -17,10 +19,7 @@ public class Medicine {
 
     private String code;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "doze_id", referencedColumnName = "id"))
+    @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Doze> dozes;
 
     @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
