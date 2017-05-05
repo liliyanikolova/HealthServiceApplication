@@ -14,7 +14,7 @@ public interface PatientService {
 
     EditPatientBindingModel findPatientById(Long id);
 
-    void save(EditPatientBindingModel editPatientBindingModel);
+    void save(EditPatientBindingModel editPatientBindingModel, User user);
 
     List<BasicPatientViewModel> getAllPatients();
 

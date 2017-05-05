@@ -56,6 +56,25 @@ public class PatientController {
         return "redirect:/patients";
     }
 
+    @GetMapping("/add/{egn}")
+    public String getAddPatientPage(@PathVariable String egn, @ModelAttribute AddPatientBidingModel addPatientBidingModel){
+        addPatientBidingModel.setEgn(egn);
+        return "patients/add";
+    }
+
+    @PostMapping("/add/{egn}")
+    public String addPatient(@PathVariable String egn, @Valid @ModelAttribute AddPatientBidingModel addPatientBidingModel, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "patients/add/" + egn;
+        }
+
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        this.patientService.add(addPatientBidingModel, loggedUser);
+
+        return "redirect:/patients";
+    }
+
     @GetMapping("/edit/{id}")
     public String getEditPatientPage(@PathVariable Long id, Model model){
         EditPatientBindingModel editPatientBindingModel = this.patientService.findPatientById(id);
@@ -70,8 +89,9 @@ public class PatientController {
             return "patients/edit";
         }
 
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         editPatientBindingModel.setId(id);
-        this.patientService.save(editPatientBindingModel);
+        this.patientService.save(editPatientBindingModel, user);
 
         return "redirect:/patients";
     }
@@ -93,6 +113,6 @@ public class PatientController {
             return "redirect:/patients/edit/" + id;
         }
 
-        return "redirect:/patients/add";
+        return "redirect:/patients/add/" + egn;
     }
 }

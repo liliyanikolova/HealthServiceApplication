@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -51,11 +52,23 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void save(EditPatientBindingModel editPatientBindingModel) {
+    public void save(EditPatientBindingModel editPatientBindingModel, User user) {
         String egn = this.patientRepository.findOne(editPatientBindingModel.getId()).getEgn();
-        Patient patient = this.modelMapper.map(editPatientBindingModel, Patient.class);
-        patient.setEgn(egn);
-        this.patientRepository.saveAndFlush(patient);
+        Patient editPatient = this.modelMapper.map(editPatientBindingModel, Patient.class);
+        editPatient.setEgn(egn);
+        this.patientRepository.saveAndFlush(editPatient);
+
+        Doctor doctor = (Doctor) user;
+        Set<Patient> patients = doctor.getPatients();
+        for (Patient patient : patients) {
+            if (patient.getId() == editPatient.getId()){
+                return;
+            }
+        }
+
+        doctor.getPatients().add(editPatient);
+
+        this.userRepository.save(doctor);
     }
 
     @Override
