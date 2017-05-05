@@ -65,16 +65,16 @@ public class DoctorController {
         return "doctor-edit";
     }
 
-//    @PostMapping("/edit/{userId}")
-//    public String editUser(@Valid @ModelAttribute EditDoctorBidingModel editDoctorBidingModel, @PathVariable Long userId, BindingResult bindingResult){
-//        if(bindingResult.hasErrors()){
-//            return "doctor-edit";
-//        }
-//
-//        editDoctorBidingModel.setId(userId);
-//        this.userService.save(editDoctorBidingModel);
-//        return "redirect:/";
-//    }
+    @PostMapping("/edit/{userId}")
+    public String editUser(@Valid @ModelAttribute EditDoctorBidingModel editDoctorBidingModel, @PathVariable Long userId, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "doctor-edit";
+        }
+
+        editDoctorBidingModel.setId(userId);
+        this.userService.save(editDoctorBidingModel);
+        return "redirect:/";
+    }
 
 
     @GetMapping("/delete/patient/{id}")

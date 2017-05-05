@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(EditDoctorBidingModel editDoctorBidingModel) {
-        Doctor doctor = new Doctor();
+        Doctor doctor = this.userRepository.findById(editDoctorBidingModel.getId());
         doctor.setFirstName(editDoctorBidingModel.getFirstName());
         doctor.setLastName(editDoctorBidingModel.getLastName());
         doctor.setUin(editDoctorBidingModel.getUin());

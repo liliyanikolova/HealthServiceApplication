@@ -22,14 +22,8 @@
         <small id="lastNameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group" th:classappend="${#fields.hasErrors('uin')}? 'has-danger'">
-        <label for="uinId">УИН</label>
-        <input type="text" class="form-control" id="uinId" aria-describedby="uinHelp" name="uin" th:field="*{uin}"/>
-        <small id="uinHelp" class="form-control-feedback" th:each="error : ${#fields.errors('uin')}" th:text="${error}">Error Message</small>
-    </div>
-
     <fieldset class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
-        <label for="titleId">Изберете титла</label>
+        <label for="titleId">Титла</label>
         <div class="form-check" th:each="title,iter : ${titles}">
             <label class="form-check-label">
                 <input type="radio" class="form-check-input" id="titleId" th:value="${title.getName()}" th:field="*{title}"/>
@@ -40,7 +34,7 @@
     </fieldset>
 
     <div class="form-group" th:classappend="${#fields.hasErrors('specialities')}? 'has-danger'">
-        <label for="specialitiesId">Изберете специалност(и)</label>
+        <label for="specialitiesId">Специалност(и)</label>
         <select multiple="true" class="form-control" id="specialitiesId" name="specialities" th:field="*{specialities}">
             <option th:each="speciality : ${specialities}" th:value="${speciality.name}" th:text="${speciality.name}">Option 1</option>
         </select>
@@ -73,6 +67,12 @@
 </form>
 
 <form method="post" th:fragment="edit-form" th:object="${editDoctorBidingModel}">
+
+    <div class="form-group" th:classappend="${#fields.hasErrors('uin')}? 'has-danger'">
+        <label for="uinId">УИН</label>
+        <input type="text" class="form-control" id="uinId" aria-describedby="uinHelp" name="uin" th:field="*{uin}"/>
+        <small id="uinHelp" class="form-control-feedback" th:each="error : ${#fields.errors('uin')}" th:text="${error}">Error Message</small>
+    </div>
 
     <div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-danger'">
         <label for="firstName">Име</label>
