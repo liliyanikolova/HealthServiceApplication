@@ -39,7 +39,7 @@ public class MedicineController {
             return "medicines/add";
         }
 
-
+        this.medicineService.addNewMedicine(addMedicineBidingModel);
 
         return "redirect:/medicines";
     }

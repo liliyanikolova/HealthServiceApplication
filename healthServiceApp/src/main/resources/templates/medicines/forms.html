@@ -15,12 +15,18 @@
         <small id="nameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('name')}" th:text="${error}">Error Message</small>
     </div>
 
+    <div class="form-group" th:classappend="${#fields.hasErrors('measurement')}? 'has-danger'">
+        <label for="measurementId">Мерна единица</label>
+        <input type="text" class="form-control" id="measurementId" aria-describedby="measurementHelp" name="measurement" th:field="*{measurement}"/>
+        <small id="measurementHelp" class="form-control-feedback" th:each="error : ${#fields.errors('measurement')}" th:text="${error}">Error Message</small>
+    </div>
+
     <div class="form-group">
         <div class="doze-input">
             <label>Доза</label>
             <input type="text" class="form-control" name="dozes[]" th:field="*{dozes}" />
         </div>
-        <button type="button" class="btn btn-warning" id="btn-add-doze">Добави доза</button>
+        <button type="button" class="btn btn-primary" id="btn-add-doze">Добави доза</button>
     </div>
 
     <button type="submit" class="btn btn-success">Запази</button>
@@ -32,7 +38,7 @@
         btn_remove_doze.type      = 'button';
         btn_remove_doze.innerText = 'Изтрий';
         btn_remove_doze.classList.add('btn');
-        btn_remove_doze.classList.add('btn-warning');
+        btn_remove_doze.classList.add('btn-primary');
 
         var doze_inputs     = document.getElementsByClassName( 'doze-input' );
         var doze_input_tmpl = doze_inputs[ 0 ];

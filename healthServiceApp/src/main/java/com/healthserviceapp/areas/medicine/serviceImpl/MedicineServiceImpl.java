@@ -41,20 +41,27 @@ public class MedicineServiceImpl implements MedicineService{
 
     @Override
     public void addNewMedicine(AddMedicineBidingModel addMedicineBidingModel) {
-        Medicine medicine = this.modelMapper.map(addMedicineBidingModel, Medicine.class);
+        Medicine medicine = new Medicine();
+        medicine.setCode(addMedicineBidingModel.getCode());
+        medicine.setName(addMedicineBidingModel.getName());
 
+        this.medicineRepository.save(medicine);
+
+        String measurement = addMedicineBidingModel.getMeasurement();
         Integer[] dozeQuantities = addMedicineBidingModel.getDozes();
         LinkedHashSet<Doze> dozes = new LinkedHashSet();
         for (Integer dozeQuantity : dozeQuantities) {
             Doze doze = new Doze();
-
-
+            doze.setQuantity(dozeQuantity);
+            doze.setMeasurement(measurement);
+            doze.setMedicine(medicine);
+            this.dozeRepository.save(doze);
             dozes.add(doze);
         }
 
-        medicine.setDozes(dozes);
+//        medicine.setDozes(dozes);
 
-        this.medicineRepository.save(medicine);
+//        this.medicineRepository.save(medicine);
     }
 
 }

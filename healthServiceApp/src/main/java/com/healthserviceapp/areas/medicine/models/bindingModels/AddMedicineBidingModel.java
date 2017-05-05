@@ -15,6 +15,9 @@ public class AddMedicineBidingModel {
     @NotEmpty(message = "Въведете наименование")
     private String name;
 
+    @NotEmpty(message = "Въведете мерна единица")
+    private String measurement;
+
     @Size(min = 1, message = "Въведете поне една доза")
     private Integer[] dozes;
 
@@ -35,6 +38,14 @@ public class AddMedicineBidingModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMeasurement() {
+        return measurement;
+    }
+
+    public void setMeasurement(String measurement) {
+        this.measurement = measurement;
     }
 
     public Integer[] getDozes() {
