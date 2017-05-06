@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<form method="post" th:fragment="register-form" th:object="${registerDoctorBidingModel}">
+<form method="post" th:fragment="register-form" th:object="${registerDoctorBidingModel}" enctype="multipart/form-data">
 
     <div class="form-group" th:classappend="${#fields.hasErrors('uin')}? 'has-danger'">
         <label for="uinId">УИН</label>
@@ -41,10 +41,9 @@
         <small id="capHelp" class="form-control-feedback" th:each="error : ${#fields.errors('specialities')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group" th:classappend="${#fields.hasErrors('profileImage')}? 'has-danger'">
-        <label for="imageId">Изберете профилна снимка</label>
-        <input type="file" accept="image/*" class="form-control-file" id="imageId" aria-describedby="imageHelp" name="profileImage" th:field="*{profileImage}"/>
-        <small id="imageHelp" class="form-control-feedback" th:each="error : ${#fields.errors('profileImage')}" th:text="${error}">Error Message</small>
+    <div class="form-group">
+        <label >Изберете профилна снимка</label>
+        <input type="file"  name="file"/>
     </div>
 
     <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
@@ -90,7 +89,7 @@
         <label for="titleId">Титла</label>
         <div class="form-check" th:each="title,iter : ${titles}">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="titleId" th:value="${title.getName()}" th:field="*{title}" th:selected="t"/>
+                <input type="radio" class="form-check-input" id="titleId" th:value="${title.getName()}" th:field="*{title}" th:checked="${editDoctorBidingModel.title==title.getName()}?'checked':''"/>
                 <span th:text="${title.getName()}"></span>
             </label>
         </div>

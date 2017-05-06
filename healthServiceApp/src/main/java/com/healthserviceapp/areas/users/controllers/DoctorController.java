@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.Set;
@@ -47,10 +48,13 @@ public class DoctorController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute RegisterDoctorBidingModel registerDoctorBidingModel, BindingResult bindingResult) {
+    public String registerUser(@Valid @ModelAttribute RegisterDoctorBidingModel registerDoctorBidingModel, BindingResult bindingResult, @RequestParam() MultipartFile file) {
         if (bindingResult.hasErrors()) {
             return "doctor-register";
         }
+
+        String a = file.getName();
+        System.out.println(file.getName());
 
         this.userService.register(registerDoctorBidingModel);
 
@@ -78,7 +82,7 @@ public class DoctorController {
 
 
     @GetMapping("/delete/patient/{id}")
-    public String deleteVirus(@PathVariable Long id, Model model) {
+    public String deleteVirus(@PathVariable Long id) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         this.userService.deletePatientById(id, user);
         return "redirect:/patients";

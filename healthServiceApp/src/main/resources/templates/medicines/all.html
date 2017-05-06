@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>All Patients</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/site.css" th:href="@{/css/site.css}"/>
+</head>
+<body>
+<header th:replace="fragments/parts::menu">
+</header>
+<main>
+    <br/>
+    <div class="container">
+        <br/>
+        <h1>Всички лекарства</h1>
+        <br/>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Код</th>
+                <th>Наименование</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="basicMedicineViewModel : ${basicMedicineViewModels}" th:object="${basicMedicineViewModel}">
+                <td th:text="*{code}">Код</td>
+                <td th:text="*{name}">Наименование</td>
+                <td>
+                    <a class="btn btn-warning" th:href="|/medicines/edit/*{id}|">Редактирай</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning" onClick="if(!confirm('Сигурни ли сте?')) {return false;}" th:href="|/medicines/delete/*{id}|">Изтрий</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

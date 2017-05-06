@@ -19,8 +19,8 @@ public class Medicine {
 
     private String code;
 
-//    @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private Set<Doze> dozes;
+    @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
+    private Set<Doze> dozes;
 
     @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Prescription> prescriptions;
@@ -52,13 +52,13 @@ public class Medicine {
         this.code = code;
     }
 
-//    public Set<Doze> getDozes() {
-//        return dozes;
-//    }
-//
-//    public void setDozes(Set<Doze> dozes) {
-//        this.dozes = dozes;
-//    }
+    public Set<Doze> getDozes() {
+        return dozes;
+    }
+
+    public void setDozes(Set<Doze> dozes) {
+        this.dozes = dozes;
+    }
 
     public Set<Prescription> getPrescriptions() {
         return prescriptions;

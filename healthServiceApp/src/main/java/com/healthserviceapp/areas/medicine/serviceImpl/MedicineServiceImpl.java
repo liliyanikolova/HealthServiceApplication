@@ -3,6 +3,8 @@ package com.healthserviceapp.areas.medicine.serviceImpl;
 import com.healthserviceapp.areas.medicine.entities.Doze;
 import com.healthserviceapp.areas.medicine.entities.Medicine;
 import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBidingModel;
+import com.healthserviceapp.areas.medicine.models.bindingModels.EditMedicineBidingModel;
+import com.healthserviceapp.areas.medicine.models.viewModels.BasicMedicineViewModel;
 import com.healthserviceapp.areas.medicine.repositories.DozeRepository;
 import com.healthserviceapp.areas.medicine.repositories.MedicineRepository;
 import com.healthserviceapp.areas.medicine.services.MedicineService;
@@ -10,8 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
-import java.util.SortedSet;
+import java.util.*;
 
 @Service
 public class MedicineServiceImpl implements MedicineService{
@@ -62,6 +63,42 @@ public class MedicineServiceImpl implements MedicineService{
 //        medicine.setDozes(dozes);
 
 //        this.medicineRepository.save(medicine);
+    }
+
+    @Override
+    public List<BasicMedicineViewModel> getAllMedicines() {
+        List<Medicine> medicines = this.medicineRepository.findAll();
+        List<BasicMedicineViewModel> basicMedicineViewModels = new LinkedList<>();
+        for (Medicine medicine : medicines) {
+            BasicMedicineViewModel basicMedicineViewModel = this.modelMapper.map(medicine, BasicMedicineViewModel.class);
+            basicMedicineViewModels.add(basicMedicineViewModel);
+        }
+
+        return basicMedicineViewModels;
+    }
+
+    @Override
+    public void deleteMedicineById(Long id) {
+        this.medicineRepository.delete(id);
+    }
+
+    @Override
+    public EditMedicineBidingModel findMedicineById(Long id) {
+        Medicine medicine = this.medicineRepository.findOne(id);
+        EditMedicineBidingModel editMedicineBidingModel = new EditMedicineBidingModel();
+        editMedicineBidingModel.setId(medicine.getId());
+        editMedicineBidingModel.setCode(medicine.getCode());
+        editMedicineBidingModel.setName(medicine.getName());
+
+        Set<Doze> dozes = medicine.getDozes();
+        List<Integer> dozeQuantities = new LinkedList<>();
+        for (Doze doze : dozes) {
+            dozeQuantities.add(doze.getQuantity());
+        }
+
+        editMedicineBidingModel.setDozes(dozeQuantities);
+
+        return editMedicineBidingModel;
     }
 
 }

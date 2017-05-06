@@ -30,25 +30,18 @@
                     </div>
                 </li>
             </div>
-
-            <!--<div sec:authorize="hasRole('ADMIN') or hasRole('USER')">-->
-                <!--<li class="nav-item dropdown">-->
-                    <!--<a class="nav-link dropdown-toggle" href="http://example.com" id="navbarSimulationDropdownMenu"-->
-                       <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                        <!--Simulations-->
-                    <!--</a>-->
-                    <!--<div class="dropdown-menu" aria-labelledby="navbarSimulationDropdownMenu">-->
-                        <!--<a class="dropdown-item" th:href="@{/simulations}">Show</a>-->
-                        <!--<a class="dropdown-item" th:href="@{/simulations/create}">Create</a>-->
-                    <!--</div>-->
-                <!--</li>-->
-            <!--</div>-->
-
-            <!--<div sec:authorize="hasRole('ADMIN')">-->
-                <!--<li class="nav-item ">-->
-                    <!--<a class="nav-link " href="/users">Users</a>-->
-                <!--</li>-->
-            <!--</div>-->
+            <div sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/patients" id="navbarMedicinesDropdownMenu"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Лекарства
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarPatientsDropdownMenu">
+                        <a class="dropdown-item" th:href="@{/medicines}">Покажи всички</a>
+                        <a class="dropdown-item" th:href="@{/medicines/add}">Добави ново</a>
+                    </div>
+                </li>
+            </div>
         </ul>
 
         <ul class="nav navbar-nav">
@@ -58,9 +51,21 @@
             <li class="nav-item " sec:authorize="isAnonymous()">
                 <a class="nav-link" href="/login">Вход</a>
             </li>
-            <!--<li class="nav-item" sec:authorize="isAuthenticated()">-->
-                <!--<a class="nav-link" th:href="@{/edit/{id}(id=${userId})}">Редактирай профил</a>-->
-            <!--</li>-->
+            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link" id="navbarAdminMenu"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${name}">
+                    Лекарства
+                </a>
+            </li>
+            <li class="nav-item dropdown" sec:authorize="hasRole('DOCTOR')">
+                <a class="nav-link dropdown-toggle" id="navbarDoctorDropdownMenu"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${name}">
+                    Лекарства
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarMedicinesDropdownMenu" >
+                    <a class="dropdown-item" th:href="@{/doctor/edit/{id}(id=${#authentication.getPrincipal().getId()})}">Редактирай профил</a>
+                </div>
+            </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
                 <a class="nav-link" href="/logout">Изход</a>
             </li>
