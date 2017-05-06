@@ -24,8 +24,7 @@
     <div class="form-group" th:classappend="${#fields.hasErrors('dozes')}? 'has-danger'">
         <div class="doze-input">
             <label>Доза</label>
-            <small id="dozesHelp" class="form-control-feedback" th:each="error : ${#fields.errors('dozes')}" th:text="${error}">Error Message</small>
-            <br/>
+            <div><small id="dozesHelp" class="form-control-feedback" th:each="error : ${#fields.errors('dozes')}" th:text="${error}">Error Message</small></div>
             <input type="text" class="form-control" name="dozes[]" th:field="*{dozes}" />
         </div>
         <button type="button" class="btn btn-primary" id="btn-add-doze">Добави доза</button>
@@ -87,57 +86,50 @@
         <small id="measurementHelp" class="form-control-feedback" th:each="error : ${#fields.errors('measurement')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group" th:each="doze : ${editMedicineBidingModel.dozes}">
-        <!--<div class="form-group" th:classappend="${#fields.hasErrors('doze')}? 'has-danger'">-->
-            <label>Доза</label>
-            <input type="text" class="form-control" aria-describedby="dozeHelp" name="doze" th:value="${doze}"/>
-            <!--<small class="form-control-feedback" th:each="error : ${#fields.errors('doze')}" th:text="${error}">Error Message</small>-->
-        <!--</div>-->
+    <div class="form-group doze-input" th:each="doze : ${editMedicineBidingModel.dozes}">
+        <div><label>Доза</label></div>
+        <input type="text" class="form-control" name="dozes[]" th:value="${doze}"/>
     </div>
-
-    <!--<div class="form-group">-->
-        <!--<div class="doze-input">-->
-            <!--<label>Доза</label>-->
-            <!--<input type="text" class="form-control" name="dozes[]" th:field="*{dozes}" />-->
-        <!--</div>-->
-        <!--<button type="button" class="btn btn-primary" id="btn-add-doze">Добави доза</button>-->
-    <!--</div>-->
+    <div><button type="button" class="btn btn-primary" id="btn-add-doze">Добави доза</button></div>
+    <br/>
 
     <button type="submit" class="btn btn-success">Запази</button>
     <a class="btn btn-warning" th:href="|/medicines|">Откажи</a>
 
-    <!--<script type="text/javascript">-->
-        <!--var btn_add_doze    = document.getElementById( 'btn-add-doze' );-->
-        <!--var btn_remove_doze = document.createElement( 'button' );-->
-        <!--btn_remove_doze.type      = 'button';-->
-        <!--btn_remove_doze.innerText = 'Изтрий';-->
-        <!--btn_remove_doze.classList.add('btn');-->
-        <!--btn_remove_doze.classList.add('btn-primary');-->
+    <script type="text/javascript">
+        var btn_add_doze    = document.getElementById( 'btn-add-doze' );
+        var btn_remove_doze = document.createElement( 'button' );
+        var doze_input      = document.createElement( 'input' );
+        btn_remove_doze.type      = 'button';
+        btn_remove_doze.innerText = 'Изтрий';
+        doze_input.type           = 'text';
+        btn_remove_doze.classList.add('btn');
+        btn_remove_doze.classList.add('btn-primary');
 
-        <!--var doze_inputs     = document.getElementsByClassName( 'doze-input' );-->
-        <!--var doze_input_tmpl = doze_inputs[ 0 ];-->
+        var doze_inputs     = document.getElementsByClassName( 'doze-input' );
+        var doze_input_tmpl = doze_inputs[ 0 ];
 
-        <!--btn_add_doze.addEventListener( 'click', addDoze );-->
+        btn_add_doze.addEventListener( 'click', addDoze );
 
-        <!--function addDoze () {-->
-            <!--var doze_input_clone      = doze_input_tmpl.cloneNode( true );-->
-            <!--var btn_remove_doze_clone = btn_remove_doze.cloneNode( true );-->
+        function addDoze () {
+            var doze_input_clone      = doze_input_tmpl.cloneNode( true );
+            var btn_remove_doze_clone = btn_remove_doze.cloneNode( true );
 
-            <!--doze_input_clone.getElementsByTagName( 'label' )[ 0 ].innerText += ' ' + ( 1 + doze_inputs.length );-->
-            <!--doze_input_clone.getElementsByTagName( 'input' )[ 0 ].value      = '';-->
-            <!--doze_input_clone.appendChild( btn_remove_doze_clone );-->
+//            doze_input_clone.getElementsByTagName( 'label' )[ 0 ].innerText += 'Доза';
+            doze_input_clone.getElementsByTagName( 'input' )[ 0 ].value      = '';
+            doze_input_clone.appendChild( btn_remove_doze_clone );
 
-            <!--btn_remove_doze_clone.addEventListener( 'click', deleteDoze.bind( null, doze_input_clone ) );-->
+            btn_remove_doze_clone.addEventListener( 'click', deleteDoze.bind( null, doze_input_clone ) );
 
-            <!--btn_add_doze.parentNode.insertBefore( doze_input_clone, btn_add_doze );-->
+            btn_add_doze.parentNode.insertBefore( doze_input_clone, btn_add_doze );
 
-            <!--doze_input_clone.getElementsByTagName( 'input' )[ 0 ].focus();-->
-        <!--}-->
+            doze_input_clone.getElementsByTagName( 'input' )[ 0 ].focus();
+        }
 
-        <!--function deleteDoze ( doze_input, event ) {-->
-            <!--doze_input.remove();-->
-        <!--}-->
-    <!--</script>-->
+        function deleteDoze ( doze_input, event ) {
+            doze_input.remove();
+        }
+    </script>
 </form>
 
 </body>

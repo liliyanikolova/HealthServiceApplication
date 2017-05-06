@@ -90,7 +90,7 @@ public class MedicineServiceImpl implements MedicineService{
         editMedicineBidingModel.setCode(medicine.getCode());
         editMedicineBidingModel.setName(medicine.getName());
 
-        Set<Doze> dozes = medicine.getDozes();
+        List<Doze> dozes = medicine.getDozes();
         String measurement = null;
         List<Integer> dozeQuantities = new LinkedList<>();
         for (Doze doze : dozes) {

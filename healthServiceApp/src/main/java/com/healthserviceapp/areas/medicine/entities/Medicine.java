@@ -4,6 +4,7 @@ import com.healthserviceapp.areas.protocol.entities.Prescription;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -20,7 +21,7 @@ public class Medicine {
     private String code;
 
     @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
-    private Set<Doze> dozes;
+    private List<Doze> dozes;
 
     @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Prescription> prescriptions;
@@ -52,11 +53,11 @@ public class Medicine {
         this.code = code;
     }
 
-    public Set<Doze> getDozes() {
+    public List<Doze> getDozes() {
         return dozes;
     }
 
-    public void setDozes(Set<Doze> dozes) {
+    public void setDozes(List<Doze> dozes) {
         this.dozes = dozes;
     }
 

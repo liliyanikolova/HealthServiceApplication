@@ -33,3 +33,7 @@ th{
 .doze-input input{
     display: inline;
 }
+
+#edit-medicine-form input{
+    width: 50%;
+}
