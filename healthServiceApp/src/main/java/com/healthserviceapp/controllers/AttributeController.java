@@ -1,5 +1,6 @@
 package com.healthserviceapp.controllers;
 
+import com.healthserviceapp.areas.common.utils.Constants;
 import com.healthserviceapp.areas.users.entities.Doctor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +15,7 @@ public class AttributeController {
 
     @ModelAttribute("name")
     public String getName(){
-        String name = "Admin";
+        String name = Constants.DEFAULT_GREETING_NAME;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null){
@@ -28,6 +29,4 @@ public class AttributeController {
 
         return name;
     }
-
-
 }

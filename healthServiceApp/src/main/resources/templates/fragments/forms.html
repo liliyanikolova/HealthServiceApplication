@@ -41,10 +41,25 @@
         <small id="capHelp" class="form-control-feedback" th:each="error : ${#fields.errors('specialities')}" th:text="${error}">Error Message</small>
     </div>
 
+    <!--<div class="form-group">-->
+        <!--<label for="specialitiesId">Специалност(и)</label>-->
+        <!--<select class="form-control" id="specialitiesId" name="specialities" th:field="*{specialities}">-->
+            <!--<option disabled="disabled" selected="selected" value=""> &#45;&#45; Изберете специалност &#45;&#45; </option>-->
+            <!--<option th:each="speciality : ${specialities}" th:value="${speciality.name}" th:text="${speciality.name}">Option 1</option>-->
+        <!--</select>-->
+    <!--</div>-->
+
     <div class="form-group">
         <label >Изберете профилна снимка</label>
-        <input type="file"  name="file"/>
+        <div>
+            <input type="file" class="btn btn-primary" name="file"/>
+        </div>
     </div>
+
+    <!--<label class="custom-file">-->
+        <!--<input type="file" id="file" class="custom-file-input"/>-->
+        <!--<span class="custom-file-control"></span>-->
+    <!--</label>-->
 
     <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
         <label class="form-control-label" for="inputUsername">Имейл адрес</label>

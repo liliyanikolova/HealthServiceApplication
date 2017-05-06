@@ -21,9 +21,11 @@
         <small id="measurementHelp" class="form-control-feedback" th:each="error : ${#fields.errors('measurement')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" th:classappend="${#fields.hasErrors('dozes')}? 'has-danger'">
         <div class="doze-input">
             <label>Доза</label>
+            <small id="dozesHelp" class="form-control-feedback" th:each="error : ${#fields.errors('dozes')}" th:text="${error}">Error Message</small>
+            <br/>
             <input type="text" class="form-control" name="dozes[]" th:field="*{dozes}" />
         </div>
         <button type="button" class="btn btn-primary" id="btn-add-doze">Добави доза</button>
@@ -85,12 +87,12 @@
         <small id="measurementHelp" class="form-control-feedback" th:each="error : ${#fields.errors('measurement')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div th:each="doze : ${dozes}" th:object="${doze}">
-        <div class="form-group" th:classappend="${#fields.hasErrors('doze')}? 'has-danger'">
-            <label for="dozeId">Доза</label>
-            <input type="text" class="form-control" id="dozeId" aria-describedby="dozeHelp" name="doze" th:field="*{doze}"/>
-            <small id="dozeHelp" class="form-control-feedback" th:each="error : ${#fields.errors('doze')}" th:text="${error}">Error Message</small>
-        </div>
+    <div class="form-group" th:each="doze : ${editMedicineBidingModel.dozes}">
+        <!--<div class="form-group" th:classappend="${#fields.hasErrors('doze')}? 'has-danger'">-->
+            <label>Доза</label>
+            <input type="text" class="form-control" aria-describedby="dozeHelp" name="doze" th:value="${doze}"/>
+            <!--<small class="form-control-feedback" th:each="error : ${#fields.errors('doze')}" th:text="${error}">Error Message</small>-->
+        <!--</div>-->
     </div>
 
     <!--<div class="form-group">-->
