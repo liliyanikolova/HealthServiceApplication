@@ -22,16 +22,14 @@
         <small id="lastNameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Error Message</small>
     </div>
 
-    <fieldset class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
-        <label for="titleId">Титла</label>
-        <div class="form-check" th:each="title,iter : ${titles}">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="titleId" th:value="${title.getName()}" th:field="*{title}"/>
-                <span th:text="${title.getName()}"></span>
-            </label>
-        </div>
-        <small id="titleHelp" class="form-control-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">Error Message</small>
-    </fieldset>
+    <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
+        <label for="titleIdRegister">Титла</label>
+        <select class="form-control" id="titleIdRegister" name="titles" th:field="${titles}">
+            <option disabled="disabled" selected="selected" value=""> -- Изберете специалност -- </option>
+            <option th:each="title : ${titles}" th:value="${title.name}" th:text="${title.name}">Option 1</option>
+        </select>
+        <small id="titleHelpRegister" class="form-control-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">Error Message</small>
+    </div>
 
     <div class="form-group" th:classappend="${#fields.hasErrors('specialities')}? 'has-danger'">
         <label for="specialitiesId">Специалност(и)</label>
@@ -41,13 +39,13 @@
         <small id="capHelp" class="form-control-feedback" th:each="error : ${#fields.errors('specialities')}" th:text="${error}">Error Message</small>
     </div>
 
-    <!--<div class="form-group">-->
-        <!--<label for="specialitiesId">Специалност(и)</label>-->
-        <!--<select class="form-control" id="specialitiesId" name="specialities" th:field="*{specialities}">-->
-            <!--<option disabled="disabled" selected="selected" value=""> &#45;&#45; Изберете специалност &#45;&#45; </option>-->
-            <!--<option th:each="speciality : ${specialities}" th:value="${speciality.name}" th:text="${speciality.name}">Option 1</option>-->
-        <!--</select>-->
-    <!--</div>-->
+    <div class="form-group">
+        <label for="specialitiesId">Специалност(и)</label>
+        <select class="form-control" id="specialitiesId" name="specialities" th:field="*{specialities}">
+            <option disabled="disabled" selected="selected" value=""> -- Изберете специалност -- </option>
+            <option th:each="speciality : ${specialities}" th:value="${speciality.name}" th:text="${speciality.name}">Option 1</option>
+        </select>
+    </div>
 
     <div class="form-group">
         <label >Изберете профилна снимка</label>
