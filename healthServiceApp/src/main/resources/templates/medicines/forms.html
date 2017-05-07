@@ -115,7 +115,6 @@
             var doze_input_clone      = doze_input_tmpl.cloneNode( true );
             var btn_remove_doze_clone = btn_remove_doze.cloneNode( true );
 
-//            doze_input_clone.getElementsByTagName( 'label' )[ 0 ].innerText += 'Доза';
             doze_input_clone.getElementsByTagName( 'input' )[ 0 ].value      = '';
             doze_input_clone.appendChild( btn_remove_doze_clone );
 
@@ -130,6 +129,17 @@
             doze_input.remove();
         }
     </script>
+</form>
+
+<form method="post" th:fragment="search-form" th:object="${searchMedicineBidingModel}">
+    <div class="form-group" th:classappend="${#fields.hasErrors('code')}? 'has-danger'">
+        <label for="codeId">Код на лекарството</label>
+        <input type="text" class="form-control" id="codeId" aria-describedby="codeHelp" name="egn" th:field="*{code}"/>
+        <small><div id="codeHelp" class="form-control-feedback" th:each="error : ${#fields.errors('code')}" th:text="${error}">Error Message</div></small>
+    </div>
+
+    <button type="submit" class="btn btn-success">Търси</button>
+    <a class="btn btn-warning" th:href="|/medicines|">Откажи</a>
 </form>
 
 </body>

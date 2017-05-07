@@ -3,7 +3,6 @@ package com.healthserviceapp.areas.medicine.models.bindingModels;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
-import java.util.List;
 
 public class EditMedicineBidingModel {
 
@@ -18,7 +17,7 @@ public class EditMedicineBidingModel {
     private String measurement;
 
     @Size(min = 1, message = "Въведете поне една доза")
-    private List<Integer> dozes;
+    private Integer[] dozes;
 
     public EditMedicineBidingModel() {
     }
@@ -55,11 +54,11 @@ public class EditMedicineBidingModel {
         this.measurement = measurement;
     }
 
-    public List<Integer> getDozes() {
+    public Integer[] getDozes() {
         return dozes;
     }
 
-    public void setDozes(List<Integer> dozes) {
+    public void setDozes(Integer[] dozes) {
         this.dozes = dozes;
     }
 }

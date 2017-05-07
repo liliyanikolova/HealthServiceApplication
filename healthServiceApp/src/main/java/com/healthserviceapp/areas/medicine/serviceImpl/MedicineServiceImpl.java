@@ -92,16 +92,49 @@ public class MedicineServiceImpl implements MedicineService{
 
         List<Doze> dozes = medicine.getDozes();
         String measurement = null;
-        List<Integer> dozeQuantities = new LinkedList<>();
-        for (Doze doze : dozes) {
-            dozeQuantities.add(doze.getQuantity());
-            measurement = doze.getMeasurement();
+        Integer[] dozeQuantities = new Integer[dozes.size()];
+        for (int i = 0; i < dozeQuantities.length; i++) {
+            dozeQuantities[i] = dozes.get(i).getQuantity();
+            measurement = dozes.get(i).getMeasurement();
         }
+
+//        for (Doze doze : dozes) {
+//            dozeQuantities.add(doze.getQuantity());
+//            measurement = doze.getMeasurement();
+//        }
 
         editMedicineBidingModel.setDozes(dozeQuantities);
         editMedicineBidingModel.setMeasurement(measurement);
 
         return editMedicineBidingModel;
+    }
+
+    @Override
+    public void saveChanges(EditMedicineBidingModel editMedicineBidingModel) {
+        Medicine medicine = this.medicineRepository.findOne(editMedicineBidingModel.getId());
+        medicine.setName(editMedicineBidingModel.getName());
+
+        this.medicineRepository.save(medicine);
+
+        String measurement = editMedicineBidingModel.getMeasurement();
+        Integer[] dozeQuantities = editMedicineBidingModel.getDozes();
+        LinkedHashSet<Doze> dozes = new LinkedHashSet();
+        for (Integer dozeQuantity : dozeQuantities) {
+            Doze doze = new Doze();
+            doze.setQuantity(dozeQuantity);
+            doze.setMeasurement(measurement);
+            doze.setMedicine(medicine);
+            this.dozeRepository.save(doze);
+            dozes.add(doze);
+        }
+    }
+
+    @Override
+    public Long findMedicineIdByCode(String code) {
+        Medicine medicine = this.medicineRepository.findByCode(code);
+        Long id = medicine.getId();
+
+        return id;
     }
 
 }

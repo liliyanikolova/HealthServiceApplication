@@ -17,4 +17,8 @@ public interface MedicineService {
     void deleteMedicineById(Long id);
 
     EditMedicineBidingModel findMedicineById(Long id);
+
+    void saveChanges(EditMedicineBidingModel editMedicineBidingModel);
+
+    Long findMedicineIdByCode(String code);
 }
