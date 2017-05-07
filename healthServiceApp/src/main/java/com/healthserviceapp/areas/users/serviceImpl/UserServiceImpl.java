@@ -3,6 +3,7 @@ package com.healthserviceapp.areas.users.serviceImpl;
 import com.healthserviceapp.areas.common.utils.Constants;
 import com.healthserviceapp.areas.patient.entities.Patient;
 import com.healthserviceapp.areas.users.entities.*;
+import com.healthserviceapp.areas.users.exceptions.UserNotFoundException;
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBindingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBindingModel;
 import com.healthserviceapp.areas.users.repositories.RoleRepository;
@@ -44,7 +45,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = this.userRepository.findOneByEmail(email);
-        //TODO Handle Exception
+        if (user == null){
+            throw new UserNotFoundException();
+        }
 
         return user;
     }
@@ -89,6 +92,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public EditDoctorBindingModel findDoctorById(Long id) {
         User user = this.userRepository.findOne(id);
+        if (user == null){
+            throw new UserNotFoundException();
+        }
+
         EditDoctorBindingModel editDoctorBindingModel = this.modelMapper.map(user, EditDoctorBindingModel.class);
 
         return editDoctorBindingModel;
@@ -97,6 +104,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(EditDoctorBindingModel editDoctorBindingModel) {
         Doctor doctor = this.userRepository.findById(editDoctorBindingModel.getId());
+        if (doctor == null){
+            throw new UserNotFoundException();
+        }
+
         doctor.setFirstName(editDoctorBindingModel.getFirstName());
         doctor.setLastName(editDoctorBindingModel.getLastName());
         doctor.setUin(editDoctorBindingModel.getUin());
@@ -115,6 +126,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deletePatientById(Long patientId, User user) {
+        if (user == null){
+            throw new UserNotFoundException();
+        }
+
         Doctor doctor = (Doctor) user;
         Set<Patient> patients = doctor.getPatients().stream()
                                     .filter(p -> p.getId() != patientId)

@@ -2,6 +2,7 @@ package com.healthserviceapp.areas.protocol.serviceImpl;
 
 import com.healthserviceapp.areas.medicine.models.viewModels.BasicMedicineViewModel;
 import com.healthserviceapp.areas.protocol.entities.Diagnosis;
+import com.healthserviceapp.areas.protocol.exceptions.DiagnosisNotFoundException;
 import com.healthserviceapp.areas.protocol.models.bindingModels.AddDiagnosisBindingModel;
 import com.healthserviceapp.areas.protocol.models.bindingModels.EditDiagnosisBindingModel;
 import com.healthserviceapp.areas.protocol.models.viewModels.BasicDiagnosisViewModel;
@@ -29,9 +30,9 @@ public class DiagnosisServiceImpl implements DiagnosisService{
 
     @Override
     public boolean doesCodeExist(String code) {
-        Diagnosis patient = this.diagnosisRepository.findByCode(code);
+        Diagnosis diagnosis = this.diagnosisRepository.findByCode(code);
 
-        if (patient != null){
+        if (diagnosis != null){
             return true;
         }
 
@@ -58,12 +59,20 @@ public class DiagnosisServiceImpl implements DiagnosisService{
 
     @Override
     public void deleteDiagnosisById(Long id) {
+        if(this.diagnosisRepository.getOne(id) == null){
+            throw new DiagnosisNotFoundException();
+        }
+
         this.diagnosisRepository.delete(id);
     }
 
     @Override
     public EditDiagnosisBindingModel findDiagnosisById(Long id) {
         Diagnosis diagnosis = this.diagnosisRepository.findOne(id);
+        if (diagnosis == null){
+            throw new DiagnosisNotFoundException();
+        }
+
         EditDiagnosisBindingModel editDiagnosisBindingModel = this.modelMapper.map(diagnosis, EditDiagnosisBindingModel.class);
 
         return editDiagnosisBindingModel;
@@ -72,6 +81,10 @@ public class DiagnosisServiceImpl implements DiagnosisService{
     @Override
     public void saveChanges(EditDiagnosisBindingModel editDiagnosisBindingModel) {
         Diagnosis diagnosis = this.diagnosisRepository.findOne(editDiagnosisBindingModel.getId());
+        if (diagnosis == null){
+            throw new DiagnosisNotFoundException();
+        }
+
         diagnosis.setDescription(editDiagnosisBindingModel.getDescription());
 
         this.diagnosisRepository.save(diagnosis);

@@ -1,6 +1,7 @@
 package com.healthserviceapp.areas.users.controllers;
 
 import com.healthserviceapp.areas.users.entities.User;
+import com.healthserviceapp.areas.users.exceptions.UserNotFoundException;
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBindingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBindingModel;
 import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
@@ -80,11 +81,16 @@ public class DoctorController {
         return "redirect:/";
     }
 
-
     @GetMapping("/delete/patient/{id}")
     public String deleteVirus(@PathVariable Long id) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         this.userService.deletePatientById(id, user);
         return "redirect:/patients";
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public String catchUserNotFoundException() {
+
+        return "exceptions/user-not-found";
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Bike Shop</title>
+    <title>Health Service Error</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
           th:href="@{/bootstrap/css/bootstrap.min.css}"/>
 </head>
@@ -10,8 +10,13 @@
 <header th:replace="fragments/parts::menu">
 </header>
 <main>
-    <h1 class="h1">Ooops Something Went Wrong!</h1>
-    <a class="btn btn-primary" href="/">Go Home</a>
+    <div class="container">
+        <br/>
+        <h1 class="h1">Възникна грешка! Върнете се на началната страница</h1>
+        <br/>
+        <br/>
+        <a class="btn btn-primary" href="/">Начало</a>
+    </div>
 </main>
 <script th:src="@{/jquery/jquery.min.js}"></script>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>

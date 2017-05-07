@@ -1,6 +1,7 @@
 package com.healthserviceapp.areas.patient.serviceImpl;
 
 import com.healthserviceapp.areas.patient.entities.Patient;
+import com.healthserviceapp.areas.patient.exceptions.PatientNotFoundException;
 import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
@@ -46,6 +47,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public EditPatientBindingModel findPatientById(Long id) {
         Patient patient = this.patientRepository.findOne(id);
+        if (patient ==null){
+            throw new PatientNotFoundException();
+        }
+
         EditPatientBindingModel editPatientBindingModel = this.modelMapper.map(patient, EditPatientBindingModel.class);
 
         return editPatientBindingModel;
@@ -53,6 +58,10 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void save(EditPatientBindingModel editPatientBindingModel, User user) {
+        if (this.patientRepository.findOne(editPatientBindingModel.getId()) == null){
+            throw new PatientNotFoundException();
+        }
+
         String egn = this.patientRepository.findOne(editPatientBindingModel.getId()).getEgn();
         Patient editPatient = this.modelMapper.map(editPatientBindingModel, Patient.class);
         editPatient.setEgn(egn);
@@ -110,6 +119,9 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient findPatientByEgn(String egn) {
         Patient patient = this.patientRepository.findByEgn(egn);
+        if (patient == null){
+            throw new PatientNotFoundException();
+        }
 
         return patient;
     }

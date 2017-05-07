@@ -1,6 +1,7 @@
 package com.healthserviceapp.areas.protocol.controllers;
 
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
+import com.healthserviceapp.areas.protocol.exceptions.DiagnosisNotFoundException;
 import com.healthserviceapp.areas.protocol.models.bindingModels.AddDiagnosisBindingModel;
 import com.healthserviceapp.areas.protocol.models.bindingModels.EditDiagnosisBindingModel;
 import com.healthserviceapp.areas.protocol.models.viewModels.BasicDiagnosisViewModel;
@@ -76,5 +77,11 @@ public class DiagnosisController {
         this.diagnosisService.saveChanges(editDiagnosisBindingModel);
 
         return "redirect:/diagnoses";
+    }
+
+    @ExceptionHandler(DiagnosisNotFoundException.class)
+    public String catchPatientNotFoundException() {
+
+        return "exceptions/diagnosis-not-found";
     }
 }

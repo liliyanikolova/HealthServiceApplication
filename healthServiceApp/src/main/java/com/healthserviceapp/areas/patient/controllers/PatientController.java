@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.patient.controllers;
 
+import com.healthserviceapp.areas.patient.exceptions.PatientNotFoundException;
 import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.bindingModels.SearchPatientBindingModel;
@@ -112,5 +113,11 @@ public class PatientController {
         }
 
         return "redirect:/patients/add/" + egn;
+    }
+
+    @ExceptionHandler(PatientNotFoundException.class)
+    public String catchPatientNotFoundException() {
+
+        return "exceptions/patient-not-found";
     }
 }

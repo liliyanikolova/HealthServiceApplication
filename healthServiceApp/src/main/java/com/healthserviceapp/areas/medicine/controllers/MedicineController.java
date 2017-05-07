@@ -1,5 +1,7 @@
 package com.healthserviceapp.areas.medicine.controllers;
 
+import com.healthserviceapp.areas.medicine.exceptions.DozeNotFoundException;
+import com.healthserviceapp.areas.medicine.exceptions.MedicineNotFoundException;
 import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.models.bindingModels.EditMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.models.viewModels.BasicMedicineViewModel;
@@ -76,5 +78,17 @@ public class MedicineController {
         this.medicineService.saveChanges(editMedicineBindingModel, httpServletRequest);
 
         return "redirect:/medicines";
+    }
+
+    @ExceptionHandler(MedicineNotFoundException.class)
+    public String catchMedicineNotFoundException() {
+
+        return "exceptions/medicine-not-found";
+    }
+
+    @ExceptionHandler(DozeNotFoundException.class)
+    public String catchDozeNotFoundException() {
+
+        return "exceptions/doze-not-found";
     }
 }

@@ -1,6 +1,7 @@
 package com.healthserviceapp.areas.medicine.serviceImpl;
 
 import com.healthserviceapp.areas.medicine.entities.Doze;
+import com.healthserviceapp.areas.medicine.exceptions.DozeNotFoundException;
 import com.healthserviceapp.areas.medicine.repositories.DozeRepository;
 import com.healthserviceapp.areas.medicine.services.DozeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,11 @@ public class DozeServiceImpl implements DozeService{
 
     @Override
     public Doze findByQuantityAndMedicineId(Integer quantity, Long id) {
-        return this.dozeRepository.findByQuantityAndMedicineId(quantity, id);
+        Doze doze = this.dozeRepository.findByQuantityAndMedicineId(quantity, id);
+        if (doze == null){
+            throw new DozeNotFoundException();
+        }
+
+        return doze;
     }
 }

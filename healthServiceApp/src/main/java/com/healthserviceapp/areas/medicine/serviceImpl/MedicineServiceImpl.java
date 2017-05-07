@@ -2,6 +2,7 @@ package com.healthserviceapp.areas.medicine.serviceImpl;
 
 import com.healthserviceapp.areas.medicine.entities.Doze;
 import com.healthserviceapp.areas.medicine.entities.Medicine;
+import com.healthserviceapp.areas.medicine.exceptions.MedicineNotFoundException;
 import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.models.bindingModels.EditMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.models.viewModels.BasicMedicineViewModel;
@@ -80,12 +81,20 @@ public class MedicineServiceImpl implements MedicineService{
 
     @Override
     public void deleteMedicineById(Long id) {
+        if (this.medicineRepository.findOne(id) == null){
+            throw new MedicineNotFoundException();
+        }
+
         this.medicineRepository.delete(id);
     }
 
     @Override
     public EditMedicineBindingModel findMedicineById(Long id) {
         Medicine medicine = this.medicineRepository.findOne(id);
+        if (medicine == null){
+            throw new MedicineNotFoundException();
+        }
+
         EditMedicineBindingModel editMedicineBindingModel = new EditMedicineBindingModel();
         editMedicineBindingModel.setId(medicine.getId());
         editMedicineBindingModel.setCode(medicine.getCode());
@@ -109,6 +118,10 @@ public class MedicineServiceImpl implements MedicineService{
     public void saveChanges(EditMedicineBindingModel editMedicineBindingModel, HttpServletRequest httpServletRequest) {
         Map<String,String[]> formData = httpServletRequest.getParameterMap();
         Medicine medicine = this.medicineRepository.findOne(editMedicineBindingModel.getId());
+        if (medicine == null){
+            throw new MedicineNotFoundException();
+        }
+
         medicine.setName(formData.get("name")[0]);
 
         this.medicineRepository.save(medicine);
@@ -134,6 +147,10 @@ public class MedicineServiceImpl implements MedicineService{
     @Override
     public Long findMedicineIdByCode(String code) {
         Medicine medicine = this.medicineRepository.findByCode(code);
+        if (medicine == null){
+            throw new MedicineNotFoundException();
+        }
+
         Long id = medicine.getId();
 
         return id;
