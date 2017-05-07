@@ -42,6 +42,18 @@
                     </div>
                 </li>
             </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/patients" id="navbarDiagnosisDropdownMenu"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Диагнози
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDiagnosisDropdownMenu">
+                        <a class="dropdown-item" th:href="@{/diagnosis}">Покажи всички</a>
+                        <a class="dropdown-item" th:href="@{/diagnosis/add}">Добави нова</a>
+                    </div>
+                </li>
+            </div>
         </ul>
 
         <ul class="nav navbar-nav">
