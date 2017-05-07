@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>All Diagnoses</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
+          th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../static/css/site.css" th:href="@{/css/site.css}"/>
+</head>
+<body>
+<header th:replace="fragments/parts::menu">
+</header>
+<main>
+    <br/>
+    <div class="container">
+        <br/>
+        <h1>Всички диагнози</h1>
+        <br/>
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="vertical-align:middle">МКБ код</th>
+                <th style="vertical-align:middle">Наименование на заболяването</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="basicDiagnosisViewModel : ${basicDiagnosisViewModels}" th:object="${basicDiagnosisViewModel}">
+                <td th:text="*{code}">Код</td>
+                <td th:text="*{description}">Наименование на заболяването</td>
+                <td>
+                    <a class="btn btn-warning" th:href="|/diagnoses/edit/*{id}|">Редактирай</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning" onClick="if(!confirm('Сигурни ли сте?')) {return false;}" th:href="|/diagnoses/delete/*{id}|">Изтрий</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

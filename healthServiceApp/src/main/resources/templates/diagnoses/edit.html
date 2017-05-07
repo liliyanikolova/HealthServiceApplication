@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Add Diagnosis</title>
+    <title>Edit Diagnoses</title>
     <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
           th:href="@{/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="../../static/css/site.css" th:href="@{/css/site.css}"/>
@@ -13,9 +13,9 @@
 <main>
     <br/>
     <div class="container">
-        <h1>Добавяне на диагноза</h1>
+        <h1>Редактиране на диагноза</h1>
         <br/>
-        <form th:replace="diagnosis/forms::add-form"></form>
+        <form th:replace="diagnoses/forms::edit-form"></form>
         <br/>
     </div>
 </main>

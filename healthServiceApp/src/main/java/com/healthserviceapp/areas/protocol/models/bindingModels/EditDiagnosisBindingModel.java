@@ -1,18 +1,25 @@
 package com.healthserviceapp.areas.protocol.models.bindingModels;
 
-import com.healthserviceapp.areas.protocol.customValidations.IsDiagnosisCodeUnique;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class AddDiagnosisBindingModel {
+public class EditDiagnosisBindingModel {
 
-    @IsDiagnosisCodeUnique
-    @NotEmpty(message = "Въведете код")
+    private Long id;
+
     private String code;
 
     @NotEmpty(message = "Въведете наименование на заболяването")
     private String description;
 
-    public AddDiagnosisBindingModel() {
+    public EditDiagnosisBindingModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCode() {

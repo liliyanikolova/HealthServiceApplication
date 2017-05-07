@@ -51,7 +51,7 @@ public class MedicineController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteVirus(@PathVariable Long id) {
+    public String deleteMedicine(@PathVariable Long id) {
         this.medicineService.deleteMedicineById(id);
 
         return "redirect:/medicines";
