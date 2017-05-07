@@ -33,38 +33,8 @@
     <button type="submit" class="btn btn-success">Запази</button>
     <a class="btn btn-warning" th:href="|/medicines|">Откажи</a>
 
-    <script type="text/javascript">
-        var btn_add_doze    = document.getElementById( 'btn-add-doze' );
-        var btn_remove_doze = document.createElement( 'button' );
-        btn_remove_doze.type      = 'button';
-        btn_remove_doze.innerText = 'Изтрий';
-        btn_remove_doze.classList.add('btn');
-        btn_remove_doze.classList.add('btn-primary');
+    <script type="text/javascript" th:src="@{/sripts/dozes-add-medicine.js}"/>
 
-        var doze_inputs     = document.getElementsByClassName( 'doze-input' );
-        var doze_input_tmpl = doze_inputs[ 0 ];
-
-        btn_add_doze.addEventListener( 'click', addDoze );
-
-        function addDoze () {
-            var doze_input_clone      = doze_input_tmpl.cloneNode( true );
-            var btn_remove_doze_clone = btn_remove_doze.cloneNode( true );
-
-            doze_input_clone.getElementsByTagName( 'label' )[ 0 ].innerText += ' ' + ( 1 + doze_inputs.length );
-            doze_input_clone.getElementsByTagName( 'input' )[ 0 ].value      = '';
-            doze_input_clone.appendChild( btn_remove_doze_clone );
-
-            btn_remove_doze_clone.addEventListener( 'click', deleteDoze.bind( null, doze_input_clone ) );
-
-            btn_add_doze.parentNode.insertBefore( doze_input_clone, btn_add_doze );
-
-            doze_input_clone.getElementsByTagName( 'input' )[ 0 ].focus();
-        }
-
-        function deleteDoze ( doze_input, event ) {
-            doze_input.remove();
-        }
-    </script>
 </form>
 
 <form id="edit-medicine-form" method="post" th:fragment="edit-form" th:object="${editMedicineBindingModel}">
@@ -97,39 +67,8 @@
     <button type="submit" class="btn btn-success">Запази</button>
     <a class="btn btn-warning" th:href="|/medicines|">Откажи</a>
 
-    <script type="text/javascript">
-        var btn_add_doze    = document.getElementById( 'btn-add-doze' );
-        var btn_remove_doze = document.createElement( 'button' );
-        var doze_input      = document.createElement( 'input' );
-        btn_remove_doze.type      = 'button';
-        btn_remove_doze.innerText = 'Изтрий';
-        doze_input.type           = 'text';
-        btn_remove_doze.classList.add('btn');
-        btn_remove_doze.classList.add('btn-primary');
+    <script type="text/javascript" th:src="@{/sripts/dozes-edit-medicine.js}"/>
 
-        var doze_inputs     = document.getElementsByClassName( 'doze-input' );
-        var doze_input_tmpl = doze_inputs[ 0 ];
-
-        btn_add_doze.addEventListener( 'click', addDoze );
-
-        function addDoze () {
-            var doze_input_clone      = doze_input_tmpl.cloneNode( true );
-            var btn_remove_doze_clone = btn_remove_doze.cloneNode( true );
-
-            doze_input_clone.getElementsByTagName( 'input' )[ 0 ].value      = '';
-            doze_input_clone.appendChild( btn_remove_doze_clone );
-
-            btn_remove_doze_clone.addEventListener( 'click', deleteDoze.bind( null, doze_input_clone ) );
-
-            btn_add_doze.parentNode.insertBefore( doze_input_clone, btn_add_doze );
-
-            doze_input_clone.getElementsByTagName( 'input' )[ 0 ].focus();
-        }
-
-        function deleteDoze ( doze_input, event ) {
-            doze_input.remove();
-        }
-    </script>
 </form>
 
 <form method="post" th:fragment="search-form" th:object="${searchMedicineBindingModel}">
