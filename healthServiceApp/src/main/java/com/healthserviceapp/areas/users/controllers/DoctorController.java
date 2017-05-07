@@ -1,8 +1,8 @@
 package com.healthserviceapp.areas.users.controllers;
 
 import com.healthserviceapp.areas.users.entities.User;
-import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
-import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBidingModel;
+import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBindingModel;
+import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBindingModel;
 import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
 import com.healthserviceapp.areas.users.models.viewModels.TitleViewModel;
 import com.healthserviceapp.areas.users.services.SpecialityService;
@@ -43,12 +43,12 @@ public class DoctorController {
     }
 
     @GetMapping("/register")
-    public String getRegisterPage(@ModelAttribute RegisterDoctorBidingModel registerDoctorBidingModel) {
+    public String getRegisterPage(@ModelAttribute RegisterDoctorBindingModel registerDoctorBindingModel) {
         return "doctor-register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute RegisterDoctorBidingModel registerDoctorBidingModel, BindingResult bindingResult, @RequestParam() MultipartFile file) {
+    public String registerUser(@Valid @ModelAttribute RegisterDoctorBindingModel registerDoctorBindingModel, BindingResult bindingResult, @RequestParam() MultipartFile file) {
         if (bindingResult.hasErrors()) {
             return "doctor-register";
         }
@@ -56,27 +56,27 @@ public class DoctorController {
         String a = file.getName();
         System.out.println(file.getName());
 
-        this.userService.register(registerDoctorBidingModel);
+        this.userService.register(registerDoctorBindingModel);
 
         return "redirect:/";
     }
 
     @GetMapping("/edit/{userId}")
     public String getEditUserPage(@PathVariable Long userId, Model model){
-        EditDoctorBidingModel editDoctorBidingModel = this.userService.findDoctorById(userId);
-        model.addAttribute(editDoctorBidingModel);
+        EditDoctorBindingModel editDoctorBindingModel = this.userService.findDoctorById(userId);
+        model.addAttribute(editDoctorBindingModel);
 
         return "doctor-edit";
     }
 
     @PostMapping("/edit/{userId}")
-    public String editUser(@Valid @ModelAttribute EditDoctorBidingModel editDoctorBidingModel, @PathVariable Long userId, BindingResult bindingResult){
+    public String editUser(@Valid @ModelAttribute EditDoctorBindingModel editDoctorBindingModel, @PathVariable Long userId, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "doctor-edit";
         }
 
-        editDoctorBidingModel.setId(userId);
-        this.userService.save(editDoctorBidingModel);
+        editDoctorBindingModel.setId(userId);
+        this.userService.save(editDoctorBindingModel);
         return "redirect:/";
     }
 

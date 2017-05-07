@@ -5,6 +5,7 @@ import com.healthserviceapp.areas.patient.entities.Patient;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "protocols")
@@ -28,11 +29,8 @@ public class Protocol {
     @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosis;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "protocol_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "prescription_id", referencedColumnName = "id"))
-    private List<Prescription> prescriptions;
+    @OneToMany(mappedBy = "protocol", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Prescription> prescriptions;
 
     public Protocol() {
     }
@@ -85,11 +83,11 @@ public class Protocol {
         this.diagnosis = diagnosis;
     }
 
-    public List<Prescription> getPrescriptions() {
+    public Set<Prescription> getPrescriptions() {
         return prescriptions;
     }
 
-    public void setPrescriptions(List<Prescription> prescriptions) {
+    public void setPrescriptions(Set<Prescription> prescriptions) {
         this.prescriptions = prescriptions;
     }
 }

@@ -3,18 +3,13 @@ package com.healthserviceapp.areas.users.serviceImpl;
 import com.healthserviceapp.areas.common.utils.Constants;
 import com.healthserviceapp.areas.patient.entities.Patient;
 import com.healthserviceapp.areas.users.entities.*;
-import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
-import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBidingModel;
-import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
-import com.healthserviceapp.areas.users.models.viewModels.TitleViewModel;
+import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBindingModel;
+import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBindingModel;
 import com.healthserviceapp.areas.users.repositories.RoleRepository;
 import com.healthserviceapp.areas.users.repositories.SpecialityRepository;
 import com.healthserviceapp.areas.users.repositories.TitleRepository;
 import com.healthserviceapp.areas.users.repositories.UserRepository;
-import com.healthserviceapp.areas.users.services.SpecialityService;
-import com.healthserviceapp.areas.users.services.TitleService;
 import com.healthserviceapp.areas.users.services.UserService;
-import com.healthserviceapp.areas.users.services.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,27 +50,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(RegisterDoctorBidingModel registerDoctorBidingModel) {
+    public void register(RegisterDoctorBindingModel registerDoctorBindingModel) {
         Doctor doctor = new Doctor();
-        doctor.setFirstName(registerDoctorBidingModel.getFirstName());
-        doctor.setLastName(registerDoctorBidingModel.getLastName());
-        doctor.setUin(registerDoctorBidingModel.getUin());
-        doctor.setEmail(registerDoctorBidingModel.getEmail());
+        doctor.setFirstName(registerDoctorBindingModel.getFirstName());
+        doctor.setLastName(registerDoctorBindingModel.getLastName());
+        doctor.setUin(registerDoctorBindingModel.getUin());
+        doctor.setEmail(registerDoctorBindingModel.getEmail());
 
         Role role = this.roleRepository.findOneByAuthority(Constants.DOCTOR_ROLE);
         doctor.addRole(role);
 
-        Title title = this.titleRepository.findByName(registerDoctorBidingModel.getTitle());
+        Title title = this.titleRepository.findByName(registerDoctorBindingModel.getTitle());
         doctor.setTitle(title);
 
-        String encryptedPassword = this.bCryptPasswordEncoder.encode(registerDoctorBidingModel.getPassword());
+        String encryptedPassword = this.bCryptPasswordEncoder.encode(registerDoctorBindingModel.getPassword());
         doctor.setPassword(encryptedPassword);
         doctor.setAccountNonExpired(true);
         doctor.setAccountNonLocked(true);
         doctor.setCredentialsNonExpired(true);
         doctor.setEnabled(true);
 
-        Set<Speciality> specialities = this.specialityRepository.findAllByNameIn(registerDoctorBidingModel.getSpecialities());
+        Set<Speciality> specialities = this.specialityRepository.findAllByNameIn(registerDoctorBindingModel.getSpecialities());
         doctor.setSpecialities(specialities);
 
         this.userRepository.save(doctor);
@@ -93,27 +87,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public EditDoctorBidingModel findDoctorById(Long id) {
+    public EditDoctorBindingModel findDoctorById(Long id) {
         User user = this.userRepository.findOne(id);
-        EditDoctorBidingModel editDoctorBidingModel = this.modelMapper.map(user, EditDoctorBidingModel.class);
+        EditDoctorBindingModel editDoctorBindingModel = this.modelMapper.map(user, EditDoctorBindingModel.class);
 
-        return editDoctorBidingModel;
+        return editDoctorBindingModel;
     }
 
     @Override
-    public void save(EditDoctorBidingModel editDoctorBidingModel) {
-        Doctor doctor = this.userRepository.findById(editDoctorBidingModel.getId());
-        doctor.setFirstName(editDoctorBidingModel.getFirstName());
-        doctor.setLastName(editDoctorBidingModel.getLastName());
-        doctor.setUin(editDoctorBidingModel.getUin());
+    public void save(EditDoctorBindingModel editDoctorBindingModel) {
+        Doctor doctor = this.userRepository.findById(editDoctorBindingModel.getId());
+        doctor.setFirstName(editDoctorBindingModel.getFirstName());
+        doctor.setLastName(editDoctorBindingModel.getLastName());
+        doctor.setUin(editDoctorBindingModel.getUin());
 
         Role role = this.roleRepository.findOneByAuthority(Constants.DOCTOR_ROLE);
         doctor.addRole(role);
 
-        Title title = this.titleRepository.findByName(editDoctorBidingModel.getTitle());
+        Title title = this.titleRepository.findByName(editDoctorBindingModel.getTitle());
         doctor.setTitle(title);
 
-        Set<Speciality> specialities = this.specialityRepository.findAllByNameIn(editDoctorBidingModel.getSpecialities());
+        Set<Speciality> specialities = this.specialityRepository.findAllByNameIn(editDoctorBindingModel.getSpecialities());
         doctor.setSpecialities(specialities);
 
         this.userRepository.save(doctor);

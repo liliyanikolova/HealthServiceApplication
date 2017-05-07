@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
 
-public class AddPatientBidingModel {
+public class AddPatientBindingModel {
 
     @NotEmpty(message = "Въведете РЗОК No.")
     private String rzokNumber;
@@ -36,7 +36,7 @@ public class AddPatientBidingModel {
     @NotEmpty(message = "Въведете име на личен лекар")
     private String gp;
 
-    public AddPatientBidingModel() {
+    public AddPatientBindingModel() {
     }
 
     public String getRzokNumber() {

@@ -1,7 +1,7 @@
 package com.healthserviceapp.areas.patient.serviceImpl;
 
 import com.healthserviceapp.areas.patient.entities.Patient;
-import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBidingModel;
+import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
 import com.healthserviceapp.areas.patient.repositories.PatientRepository;
@@ -34,8 +34,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void add(AddPatientBidingModel addPatientBidingModel, User user) {
-        Patient patient = this.modelMapper.map(addPatientBidingModel, Patient.class);
+    public void add(AddPatientBindingModel addPatientBindingModel, User user) {
+        Patient patient = this.modelMapper.map(addPatientBindingModel, Patient.class);
 
         Doctor doctor = (Doctor) user;
         doctor.getPatients().add(patient);

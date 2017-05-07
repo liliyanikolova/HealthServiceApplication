@@ -1,7 +1,7 @@
 package com.healthserviceapp.areas.users.customValidations;
 
 
-import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBidingModel;
+import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBindingModel;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -14,8 +14,8 @@ public class IsPasswordsMatchingValidator implements ConstraintValidator<IsPassw
 
     @Override
     public boolean isValid(Object userClass, ConstraintValidatorContext constraintValidatorContext) {
-        if(userClass instanceof RegisterDoctorBidingModel){
-            return ((RegisterDoctorBidingModel) userClass).getPassword().equals(((RegisterDoctorBidingModel) userClass).getConfirmPassword());
+        if(userClass instanceof RegisterDoctorBindingModel){
+            return ((RegisterDoctorBindingModel) userClass).getPassword().equals(((RegisterDoctorBindingModel) userClass).getConfirmPassword());
         }
 
         return false;

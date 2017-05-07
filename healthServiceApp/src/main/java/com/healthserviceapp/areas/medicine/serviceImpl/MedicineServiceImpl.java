@@ -2,8 +2,8 @@ package com.healthserviceapp.areas.medicine.serviceImpl;
 
 import com.healthserviceapp.areas.medicine.entities.Doze;
 import com.healthserviceapp.areas.medicine.entities.Medicine;
-import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBidingModel;
-import com.healthserviceapp.areas.medicine.models.bindingModels.EditMedicineBidingModel;
+import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBindingModel;
+import com.healthserviceapp.areas.medicine.models.bindingModels.EditMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.models.viewModels.BasicMedicineViewModel;
 import com.healthserviceapp.areas.medicine.repositories.DozeRepository;
 import com.healthserviceapp.areas.medicine.repositories.MedicineRepository;
@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -41,15 +42,15 @@ public class MedicineServiceImpl implements MedicineService{
     }
 
     @Override
-    public void addNewMedicine(AddMedicineBidingModel addMedicineBidingModel) {
+    public void addNewMedicine(AddMedicineBindingModel addMedicineBindingModel) {
         Medicine medicine = new Medicine();
-        medicine.setCode(addMedicineBidingModel.getCode());
-        medicine.setName(addMedicineBidingModel.getName());
+        medicine.setCode(addMedicineBindingModel.getCode());
+        medicine.setName(addMedicineBindingModel.getName());
 
         this.medicineRepository.save(medicine);
 
-        String measurement = addMedicineBidingModel.getMeasurement();
-        Integer[] dozeQuantities = addMedicineBidingModel.getDozes();
+        String measurement = addMedicineBindingModel.getMeasurement();
+        Integer[] dozeQuantities = addMedicineBindingModel.getDozes();
         LinkedHashSet<Doze> dozes = new LinkedHashSet();
         for (Integer dozeQuantity : dozeQuantities) {
             Doze doze = new Doze();
@@ -83,12 +84,12 @@ public class MedicineServiceImpl implements MedicineService{
     }
 
     @Override
-    public EditMedicineBidingModel findMedicineById(Long id) {
+    public EditMedicineBindingModel findMedicineById(Long id) {
         Medicine medicine = this.medicineRepository.findOne(id);
-        EditMedicineBidingModel editMedicineBidingModel = new EditMedicineBidingModel();
-        editMedicineBidingModel.setId(medicine.getId());
-        editMedicineBidingModel.setCode(medicine.getCode());
-        editMedicineBidingModel.setName(medicine.getName());
+        EditMedicineBindingModel editMedicineBindingModel = new EditMedicineBindingModel();
+        editMedicineBindingModel.setId(medicine.getId());
+        editMedicineBindingModel.setCode(medicine.getCode());
+        editMedicineBindingModel.setName(medicine.getName());
 
         List<Doze> dozes = medicine.getDozes();
         String measurement = null;
@@ -98,30 +99,31 @@ public class MedicineServiceImpl implements MedicineService{
             measurement = dozes.get(i).getMeasurement();
         }
 
-//        for (Doze doze : dozes) {
-//            dozeQuantities.add(doze.getQuantity());
-//            measurement = doze.getMeasurement();
-//        }
+        editMedicineBindingModel.setDozes(dozeQuantities);
+        editMedicineBindingModel.setMeasurement(measurement);
 
-        editMedicineBidingModel.setDozes(dozeQuantities);
-        editMedicineBidingModel.setMeasurement(measurement);
-
-        return editMedicineBidingModel;
+        return editMedicineBindingModel;
     }
 
     @Override
-    public void saveChanges(EditMedicineBidingModel editMedicineBidingModel) {
-        Medicine medicine = this.medicineRepository.findOne(editMedicineBidingModel.getId());
-        medicine.setName(editMedicineBidingModel.getName());
+    public void saveChanges(EditMedicineBindingModel editMedicineBindingModel, HttpServletRequest httpServletRequest) {
+        Map<String,String[]> formData = httpServletRequest.getParameterMap();
+        Medicine medicine = this.medicineRepository.findOne(editMedicineBindingModel.getId());
+        medicine.setName(formData.get("name")[0]);
 
         this.medicineRepository.save(medicine);
 
-        String measurement = editMedicineBidingModel.getMeasurement();
-        Integer[] dozeQuantities = editMedicineBidingModel.getDozes();
+        String measurement = formData.get("measurement")[0];
+        String[] dozeQuantities = formData.get("dozes[]");
         LinkedHashSet<Doze> dozes = new LinkedHashSet();
-        for (Integer dozeQuantity : dozeQuantities) {
+        medicine.getDozes().clear();
+        for (String dozeQuantity : dozeQuantities) {
+            if (dozeQuantity.equals("")){
+                continue;
+            }
+
             Doze doze = new Doze();
-            doze.setQuantity(dozeQuantity);
+            doze.setQuantity(Integer.parseInt(dozeQuantity));
             doze.setMeasurement(measurement);
             doze.setMedicine(medicine);
             this.dozeRepository.save(doze);

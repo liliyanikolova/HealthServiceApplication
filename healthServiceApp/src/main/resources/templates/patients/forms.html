@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<form method="post" th:fragment="add-form" th:object="${addPatientBidingModel}">
+<form method="post" th:fragment="add-form" th:object="${addPatientBindingModel}">
     <div class="form-group" th:classappend="${#fields.hasErrors('egn')}? 'has-danger'">
         <label for="egnId">Единен Граждански Номер (ЕГН)</label>
         <input type="text" class="form-control" id="egnId" aria-describedby="egnHelp" name="egn" th:field="*{egn}"/>
@@ -121,7 +121,7 @@
     <a class="btn btn-warning" th:href="|/patients|">Откажи</a>
 </form>
 
-<form method="post" th:fragment="search-form" th:object="${searchPatientBidingModel}">
+<form method="post" th:fragment="search-form" th:object="${searchPatientBindingModel}">
     <div class="form-group" th:classappend="${#fields.hasErrors('egn')}? 'has-danger'">
         <label for="egnId">Единен Граждански Номер (ЕГН)</label>
         <input type="text" class="form-control" id="egnId" aria-describedby="egnHelp" name="egn" th:field="*{egn}"/>

@@ -1,8 +1,7 @@
 package com.healthserviceapp.areas.medicine.controllers;
 
-import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBidingModel;
-import com.healthserviceapp.areas.medicine.models.bindingModels.EditMedicineBidingModel;
-import com.healthserviceapp.areas.medicine.models.bindingModels.SearchMedicineBidingModel;
+import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBindingModel;
+import com.healthserviceapp.areas.medicine.models.bindingModels.EditMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.models.viewModels.BasicMedicineViewModel;
 import com.healthserviceapp.areas.medicine.services.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/medicines")
@@ -33,19 +34,18 @@ public class MedicineController {
         return "medicines/all";
     }
 
-    @GetMapping("/add/{code}")
-    public String getAddMedicinePage(@ModelAttribute AddMedicineBidingModel addMedicineBidingModel, @PathVariable String code){
-        addMedicineBidingModel.setCode(code);
+    @GetMapping("/add")
+    public String getAddMedicinePage(@ModelAttribute AddMedicineBindingModel addMedicineBindingModel){
         return "medicines/add";
     }
 
-    @PostMapping("/add/{code}")
-    public String addMedicine(@Valid @ModelAttribute AddMedicineBidingModel addMedicineBidingModel, BindingResult bindingResult, @PathVariable String code){
+    @PostMapping("/add")
+    public String addMedicine(@Valid @ModelAttribute AddMedicineBindingModel addMedicineBindingModel, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "medicines/add/" + code;
+            return "medicines/add";
         }
 
-        this.medicineService.addNewMedicine(addMedicineBidingModel);
+        this.medicineService.addNewMedicine(addMedicineBindingModel);
 
         return "redirect:/medicines";
     }
@@ -59,40 +59,22 @@ public class MedicineController {
 
     @GetMapping("/edit/{id}")
     public String getEditMedicinePage(@PathVariable Long id, Model model){
-        EditMedicineBidingModel editMedicineBidingModel = this.medicineService.findMedicineById(id);
-        model.addAttribute(editMedicineBidingModel);
+        EditMedicineBindingModel editMedicineBindingModel = this.medicineService.findMedicineById(id);
+        model.addAttribute(editMedicineBindingModel);
 
         return "medicines/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String editMedicine(@Valid @ModelAttribute EditMedicineBidingModel editMedicineBidingModel, @PathVariable Long id, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "medicines/edit";
-        }
+    public String editMedicine(HttpServletRequest httpServletRequest,@PathVariable Long id){
+//        if (bindingResult.hasErrors()){
+//            return "medicines/edit/" + id;
+//        }
 
-        this.medicineService.saveChanges(editMedicineBidingModel);
+        EditMedicineBindingModel editMedicineBindingModel = new EditMedicineBindingModel();
+        editMedicineBindingModel.setId(id);
+        this.medicineService.saveChanges(editMedicineBindingModel, httpServletRequest);
 
         return "redirect:/medicines";
-    }
-
-    @GetMapping("/search")
-    public String getSearchMedicinePage(@ModelAttribute SearchMedicineBidingModel searchMedicineBidingModel){
-        return "medicines/search";
-    }
-
-    @PostMapping("/search")
-    public String searchPatient(@Valid @ModelAttribute SearchMedicineBidingModel searchMedicineBidingModel, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "patients/search";
-        }
-
-        String code = searchMedicineBidingModel.getCode();
-        if (this.medicineService.doesCodeExist(code)){
-            Long id = this.medicineService.findMedicineIdByCode(code);
-            return "redirect:/medicines/edit/" + id;
-        }
-
-        return "redirect:/medicines/add/" + code;
     }
 }

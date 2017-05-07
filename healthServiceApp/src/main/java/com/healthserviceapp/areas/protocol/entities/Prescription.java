@@ -18,6 +18,10 @@ public class Prescription {
 
     private Double doze;
 
+    @ManyToOne
+    @JoinColumn(name = "protocol_id")
+    private Protocol protocol;
+
     public Prescription() {
     }
 

@@ -1,10 +1,11 @@
 package com.healthserviceapp.areas.medicine.models.bindingModels;
 
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
 
-public class EditMedicineBidingModel {
+public class EditMedicineBindingModel {
 
     private Long id;
 
@@ -19,8 +20,9 @@ public class EditMedicineBidingModel {
     @Size(min = 1, message = "Въведете поне една доза")
     private Integer[] dozes;
 
-    public EditMedicineBidingModel() {
+    public EditMedicineBindingModel() {
     }
+
 
     public Long getId() {
         return id;

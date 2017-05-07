@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
 
-public class EditDoctorBidingModel {
+public class EditDoctorBindingModel {
 
     private Long id;
 
@@ -26,7 +26,7 @@ public class EditDoctorBidingModel {
 
     private byte[] profileImage;
 
-    public EditDoctorBidingModel() {
+    public EditDoctorBindingModel() {
     }
 
     public Long getId() {

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<form id="add-medicine-form" method="post" th:fragment="add-form" th:object="${addMedicineBidingModel}">
+<form id="add-medicine-form" method="post" th:fragment="add-form" th:object="${addMedicineBindingModel}">
     <div class="form-group" th:classappend="${#fields.hasErrors('code')}? 'has-danger'">
         <label for="codeId">Код</label>
         <input type="text" class="form-control" id="codeId" aria-describedby="codeHelp" name="code" th:field="*{code}"/>
@@ -67,7 +67,7 @@
     </script>
 </form>
 
-<form id="edit-medicine-form" method="post" th:fragment="edit-form" th:object="${editMedicineBidingModel}">
+<form id="edit-medicine-form" method="post" th:fragment="edit-form" th:object="${editMedicineBindingModel}">
     <div class="form-group" th:classappend="${#fields.hasErrors('code')}? 'has-danger'">
         <label for="codeId">Код</label>
         <input type="text" disabled="disabled" class="form-control" id="codeId" aria-describedby="codeHelp" name="code" th:field="*{code}"/>
@@ -86,9 +86,10 @@
         <small id="measurementHelp" class="form-control-feedback" th:each="error : ${#fields.errors('measurement')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group doze-input" th:each="doze : ${editMedicineBidingModel.dozes}">
+    <div class="form-group doze-input" th:each="doze : ${editMedicineBindingModel.dozes}">
         <div><label>Доза</label></div>
-        <input type="text" class="form-control" name="dozes[]" th:value="${doze}"/>
+        <input type="text" class="form-control dzs" name="dozes[]" th:value="${doze}"/>
+
     </div>
     <div><button type="button" class="btn btn-primary" id="btn-add-doze">Добави доза</button></div>
     <br/>
@@ -131,7 +132,7 @@
     </script>
 </form>
 
-<form method="post" th:fragment="search-form" th:object="${searchMedicineBidingModel}">
+<form method="post" th:fragment="search-form" th:object="${searchMedicineBindingModel}">
     <div class="form-group" th:classappend="${#fields.hasErrors('code')}? 'has-danger'">
         <label for="codeId">Код на лекарството</label>
         <input type="text" class="form-control" id="codeId" aria-describedby="codeHelp" name="egn" th:field="*{code}"/>

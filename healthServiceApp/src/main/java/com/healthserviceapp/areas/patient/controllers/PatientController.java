@@ -1,13 +1,11 @@
 package com.healthserviceapp.areas.patient.controllers;
 
-import com.healthserviceapp.areas.patient.entities.Patient;
-import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBidingModel;
+import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
-import com.healthserviceapp.areas.patient.models.bindingModels.SearchPatientBidingModel;
+import com.healthserviceapp.areas.patient.models.bindingModels.SearchPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
 import com.healthserviceapp.areas.patient.services.PatientService;
 import com.healthserviceapp.areas.users.entities.User;
-import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBidingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -39,38 +37,38 @@ public class PatientController {
     }
 
     @GetMapping("/add")
-    public String getAddPatientPage(@ModelAttribute AddPatientBidingModel addPatientBidingModel){
+    public String getAddPatientPage(@ModelAttribute AddPatientBindingModel addPatientBindingModel){
         return "patients/add";
     }
 
     @PostMapping("/add")
-    public String addPatient(@Valid @ModelAttribute AddPatientBidingModel addPatientBidingModel, BindingResult bindingResult) {
+    public String addPatient(@Valid @ModelAttribute AddPatientBindingModel addPatientBindingModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "patients/add";
         }
 
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        this.patientService.add(addPatientBidingModel, loggedUser);
+        this.patientService.add(addPatientBindingModel, loggedUser);
 
         return "redirect:/patients";
     }
 
     @GetMapping("/add/{egn}")
-    public String getAddPatientPage(@PathVariable String egn, @ModelAttribute AddPatientBidingModel addPatientBidingModel){
-        addPatientBidingModel.setEgn(egn);
+    public String getAddPatientPage(@PathVariable String egn, @ModelAttribute AddPatientBindingModel addPatientBindingModel){
+        addPatientBindingModel.setEgn(egn);
         return "patients/add";
     }
 
     @PostMapping("/add/{egn}")
-    public String addPatient(@PathVariable String egn, @Valid @ModelAttribute AddPatientBidingModel addPatientBidingModel, BindingResult bindingResult) {
+    public String addPatient(@PathVariable String egn, @Valid @ModelAttribute AddPatientBindingModel addPatientBindingModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "patients/add/" + egn;
         }
 
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        this.patientService.add(addPatientBidingModel, loggedUser);
+        this.patientService.add(addPatientBindingModel, loggedUser);
 
         return "redirect:/patients";
     }
@@ -97,17 +95,17 @@ public class PatientController {
     }
 
     @GetMapping("/search")
-    public String getSearchPatientPage(@ModelAttribute SearchPatientBidingModel searchPatientBidingModel){
+    public String getSearchPatientPage(@ModelAttribute SearchPatientBindingModel searchPatientBindingModel){
         return "patients/search";
     }
 
     @PostMapping("/search")
-    public String searchPatient(@Valid @ModelAttribute SearchPatientBidingModel searchPatientBidingModel, BindingResult bindingResult) {
+    public String searchPatient(@Valid @ModelAttribute SearchPatientBindingModel searchPatientBindingModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "patients/search";
         }
 
-        String egn = searchPatientBidingModel.getEgn();
+        String egn = searchPatientBindingModel.getEgn();
         if (this.patientService.doesEgnExist(egn)){
             Long id = this.patientService.findPatientByEgn(egn).getId();
             return "redirect:/patients/edit/" + id;

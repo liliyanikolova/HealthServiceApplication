@@ -4,13 +4,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
 
-public class SearchPatientBidingModel {
+public class SearchPatientBindingModel {
 
     @NotEmpty(message = "Въведете ЕГН")
     @Size(min = 10, max = 10, message = "Невалидно ЕГН")
     private String egn;
 
-    public SearchPatientBidingModel() {
+    public SearchPatientBindingModel() {
     }
 
     public String getEgn() {

@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.*;
 
 @IsPasswordsMatching
-public class RegisterDoctorBidingModel {
+public class RegisterDoctorBindingModel {
 
     @IsEmailUnique
     @NotEmpty(message = "Въведете имейл адрес")
@@ -40,7 +40,7 @@ public class RegisterDoctorBidingModel {
 
     private byte[] profileImage;
 
-    public RegisterDoctorBidingModel() {
+    public RegisterDoctorBindingModel() {
     }
 
     public String getEmail() {
