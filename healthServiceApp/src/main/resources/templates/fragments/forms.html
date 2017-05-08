@@ -22,29 +22,23 @@
         <small id="lastNameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
-        <label for="titleIdRegister">Титла</label>
-        <select class="form-control" id="titleIdRegister" name="titles" th:field="${titles}">
-            <option disabled="disabled" selected="selected" value=""> -- Изберете специалност -- </option>
-            <option th:each="title : ${titles}" th:value="${title.name}" th:text="${title.name}">Option 1</option>
-        </select>
-        <small id="titleHelpRegister" class="form-control-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">Error Message</small>
-    </div>
+    <fieldset class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
+        <label for="titleId">Изберете титла:</label>
+        <div class="form-check" th:each="title,iter : ${titles}">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" id="titleId" th:value="${title.getName()}" th:field="*{title}"/>
+                <span th:text="${title.getName()}"></span>
+            </label>
+        </div>
+        <small id="titleHelp" class="form-control-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">Error Message</small>
+    </fieldset>
 
     <div class="form-group" th:classappend="${#fields.hasErrors('specialities')}? 'has-danger'">
-        <label for="specialitiesId">Специалност(и)</label>
+        <label for="specialitiesId">Изберете специалност(и)</label>
         <select multiple="true" class="form-control" id="specialitiesId" name="specialities" th:field="*{specialities}">
             <option th:each="speciality : ${specialities}" th:value="${speciality.name}" th:text="${speciality.name}">Option 1</option>
         </select>
         <small id="capHelp" class="form-control-feedback" th:each="error : ${#fields.errors('specialities')}" th:text="${error}">Error Message</small>
-    </div>
-
-    <div class="form-group">
-        <label for="specialitiesId">Специалност(и)</label>
-        <select class="form-control" id="specialitiesId" name="specialities" th:field="*{specialities}">
-            <option disabled="disabled" selected="selected" value=""> -- Изберете специалност -- </option>
-            <option th:each="speciality : ${specialities}" th:value="${speciality.name}" th:text="${speciality.name}">Option 1</option>
-        </select>
     </div>
 
     <div class="form-group">
@@ -81,9 +75,9 @@
 <form method="post" th:fragment="edit-form" th:object="${editDoctorBindingModel}">
 
     <div class="form-group" th:classappend="${#fields.hasErrors('uin')}? 'has-danger'">
-        <label for="uinId">УИН</label>
-        <input type="text" class="form-control" id="uinId" aria-describedby="uinHelp" name="uin" th:field="*{uin}"/>
-        <small id="uinHelp" class="form-control-feedback" th:each="error : ${#fields.errors('uin')}" th:text="${error}">Error Message</small>
+        <label for="uinIdEdit">УИН</label>
+        <input type="text" class="form-control" id="uinIdEdit" aria-describedby="uinHelpEdit" name="uin" th:field="*{uin}"/>
+        <small id="uinHelpEdit" class="form-control-feedback" th:each="error : ${#fields.errors('uin')}" th:text="${error}">Error Message</small>
     </div>
 
     <div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-danger'">
@@ -98,16 +92,24 @@
         <small id="lastNameHelp" class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
-        <label for="titleIdRegister">Титла</label>
-        <select class="form-control" id="titleIdRegister" name="titles" th:field="${titles}">
-            <option th:each="title : ${titles}" th:value="${title.name}" th:text="${title.name}" th:selected="${title.name == editDoctorBindingModel.title}">Option 1</option>
-        </select>
-        <small id="titleHelpRegister" class="form-control-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">Error Message</small>
-    </div>
+    <!--<div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-danger'">-->
+        <!--<label for="setTitleId">Текуща титла</label>-->
+        <!--<input disabled="disabled" type="text" class="form-control" id="setTitleId" aria-describedby="setTitleHelp" name="title" th:field="*{title.name}"/>-->
+    <!--</div>-->
+
+    <fieldset class="form-group" th:classappend="${#fields.hasErrors('title')}? 'has-danger'">
+        <label for="titleId">Изберете нова титла:</label>
+        <div class="form-check" th:each="title,iter : ${titles}">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" id="titleId" th:value="${title.getName()}" th:field="*{title}"/>
+                <span th:text="${title.getName()}"></span>
+            </label>
+        </div>
+        <small id="titleHelp" class="form-control-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">Error Message</small>
+    </fieldset>
 
     <div class="form-group" th:classappend="${#fields.hasErrors('specialities')}? 'has-danger'">
-        <label for="specialitiesId">Специалност(и)</label>
+        <label for="specialitiesId">Изберете специалност(и)</label>
         <select multiple="true" class="form-control" id="specialitiesId" name="specialities" th:field="*{specialities}">
             <option th:each="speciality : ${specialities}" th:value="${speciality.name}" th:text="${speciality.name}">Option 1</option>
         </select>

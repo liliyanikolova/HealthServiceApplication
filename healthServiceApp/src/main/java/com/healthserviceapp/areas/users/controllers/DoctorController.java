@@ -71,18 +71,18 @@ public class DoctorController {
     }
 
     @PostMapping("/edit/{userId}")
-    public String editUser(@Valid @ModelAttribute EditDoctorBindingModel editDoctorBindingModel, @PathVariable Long userId, BindingResult bindingResult){
+    public String editUser(@PathVariable Long userId, @Valid @ModelAttribute EditDoctorBindingModel editDoctorBindingModel, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "doctor-edit";
         }
 
         editDoctorBindingModel.setId(userId);
-        this.userService.save(editDoctorBindingModel);
+        this.userService.saveChanges(editDoctorBindingModel);
         return "redirect:/";
     }
 
     @GetMapping("/delete/patient/{id}")
-    public String deleteVirus(@PathVariable Long id) {
+    public String deletePatient(@PathVariable Long id) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         this.userService.deletePatientById(id, user);
         return "redirect:/patients";
