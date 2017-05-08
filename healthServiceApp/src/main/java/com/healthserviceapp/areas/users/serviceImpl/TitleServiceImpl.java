@@ -1,6 +1,8 @@
 package com.healthserviceapp.areas.users.serviceImpl;
 
 import com.healthserviceapp.areas.users.entities.Title;
+import com.healthserviceapp.areas.users.exceptions.TitleNotFoundException;
+import com.healthserviceapp.areas.users.models.bindingModels.TitleBindingModel;
 import com.healthserviceapp.areas.users.models.viewModels.TitleViewModel;
 import com.healthserviceapp.areas.users.repositories.TitleRepository;
 import com.healthserviceapp.areas.users.services.TitleService;
@@ -40,6 +42,18 @@ public class TitleServiceImpl implements TitleService{
     public TitleViewModel findByName(String name) {
         Title title = this.titleRepository.findByName(name);
         TitleViewModel titleViewModel = this.modelMapper.map(title, TitleViewModel.class);
+
+        return titleViewModel;
+    }
+
+    @Override
+    public TitleBindingModel findByDoctorId(Long id) {
+        Title title = this.titleRepository.findByDoctorId(id);
+        if (title == null){
+            throw new TitleNotFoundException();
+        }
+
+        TitleBindingModel titleViewModel = this.modelMapper.map(title, TitleBindingModel.class);
 
         return titleViewModel;
     }

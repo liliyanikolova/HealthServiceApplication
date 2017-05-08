@@ -1,9 +1,12 @@
 package com.healthserviceapp.areas.users.controllers;
 
+import com.healthserviceapp.areas.users.entities.Title;
 import com.healthserviceapp.areas.users.entities.User;
+import com.healthserviceapp.areas.users.exceptions.TitleNotFoundException;
 import com.healthserviceapp.areas.users.exceptions.UserNotFoundException;
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBindingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBindingModel;
+import com.healthserviceapp.areas.users.models.bindingModels.TitleBindingModel;
 import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
 import com.healthserviceapp.areas.users.models.viewModels.TitleViewModel;
 import com.healthserviceapp.areas.users.services.SpecialityService;
@@ -65,6 +68,8 @@ public class DoctorController {
     @GetMapping("/edit/{userId}")
     public String getEditUserPage(@PathVariable Long userId, Model model){
         EditDoctorBindingModel editDoctorBindingModel = this.userService.findDoctorById(userId);
+        TitleBindingModel title = this.titleService.findByDoctorId(userId);
+        editDoctorBindingModel.setTitle(title.getName());
         model.addAttribute(editDoctorBindingModel);
 
         return "doctor-edit";
@@ -92,5 +97,11 @@ public class DoctorController {
     public String catchUserNotFoundException() {
 
         return "exceptions/user-not-found";
+    }
+
+    @ExceptionHandler(TitleNotFoundException.class)
+    public String catchTitleNotFoundException() {
+
+        return "exceptions/title-not-found";
     }
 }
