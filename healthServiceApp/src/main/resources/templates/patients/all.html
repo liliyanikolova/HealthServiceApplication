@@ -16,6 +16,11 @@
         <br/>
         <h1>Вашите пациенти</h1>
         <br/>
+        <div id="searchPatint" class="form-inline mt-2 mt-md-0">
+            <input id="searchBox" class="form-control mr-sm-2" placeholder="ЕГН" type="text"/>
+            <button onclick="search()" class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Търси</button>
+        </div>
+        <br/>
         <table class="table">
             <thead>
             <tr>
@@ -26,7 +31,7 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="patientsList">
             <tr th:each="basicPatientViewModel : ${basicPatientViewModels}" th:object="${basicPatientViewModel}">
                 <td th:text="*{egn}">ЕГН</td>
                 <td th:text="*{firstName}">Име</td>
@@ -44,6 +49,7 @@
 </main>
 <script th:src="@{/jquery/jquery.min.js}"></script>
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/search-patient-form.js}"></script>
 
 </body>
 </html>

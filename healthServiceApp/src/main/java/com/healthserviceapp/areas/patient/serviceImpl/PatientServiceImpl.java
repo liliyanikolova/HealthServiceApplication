@@ -7,6 +7,7 @@ import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindin
 import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewModel;
 import com.healthserviceapp.areas.patient.repositories.PatientRepository;
 import com.healthserviceapp.areas.patient.services.PatientService;
+import com.healthserviceapp.areas.protocol.models.viewModels.BasicDiagnosisViewModel;
 import com.healthserviceapp.areas.users.entities.Doctor;
 import com.healthserviceapp.areas.users.entities.User;
 import com.healthserviceapp.areas.users.repositories.UserRepository;
@@ -125,4 +126,17 @@ public class PatientServiceImpl implements PatientService {
 
         return patient;
     }
+
+    @Override
+    public List<BasicPatientViewModel> searchByEgn(String egn, User user) {
+        List<Patient> patients = this.patientRepository.searchByEgn(egn, user.getId());
+        List<BasicPatientViewModel> basicPatientViewModels = new LinkedList<>();
+        for (Patient patient : patients) {
+            BasicPatientViewModel basicPatientViewModel = this.modelMapper.map(patient, BasicPatientViewModel.class);
+            basicPatientViewModels.add(basicPatientViewModel);
+        }
+
+        return basicPatientViewModels;
+    }
+
 }

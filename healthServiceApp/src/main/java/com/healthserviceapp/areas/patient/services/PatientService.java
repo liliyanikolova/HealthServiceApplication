@@ -24,4 +24,5 @@ public interface PatientService {
 
     Patient findPatientByEgn(String egn);
 
+    List<BasicPatientViewModel> searchByEgn(String egn, User user);
 }

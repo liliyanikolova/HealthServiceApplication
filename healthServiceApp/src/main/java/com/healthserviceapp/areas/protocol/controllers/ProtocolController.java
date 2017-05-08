@@ -14,4 +14,9 @@ public class ProtocolController {
     public String getAddProtocolPage(@ModelAttribute AddProtocolBindingModel addProtocolBindingModel){
         return "protocols/add";
     }
+
+    @GetMapping("/test")
+    public String gateProtocolPageTest(){
+        return "protocols/protocol";
+    }
 }

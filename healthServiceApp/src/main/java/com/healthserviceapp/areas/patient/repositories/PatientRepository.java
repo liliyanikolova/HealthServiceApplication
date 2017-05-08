@@ -18,4 +18,10 @@ public interface PatientRepository extends JpaRepository<Patient, Long>{
             "WHERE d.id = :doctorId"
     )
     List<Patient> findLoggedDoctorPatients(@Param("doctorId") Long doctorId);
+
+    @Query(value = "SELECT p " +
+            "FROM Patient AS p join p.doctors AS d " +
+            "WHERE d.id = :doctorId and p.egn like CONCAT('%', :egn, '%') "
+    )
+    List<Patient> searchByEgn(@Param("egn") String egn, @Param("doctorId") Long doctorId);
 }

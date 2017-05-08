@@ -8,6 +8,8 @@ import com.healthserviceapp.areas.patient.models.viewModels.BasicPatientViewMode
 import com.healthserviceapp.areas.patient.services.PatientService;
 import com.healthserviceapp.areas.users.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +32,9 @@ public class PatientController {
 
     @GetMapping("")
     public String getAllPatientsPage(Model model){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<BasicPatientViewModel> basicPatientViewModels = this.patientService.getLoggedDoctorPatients(user);
-        model.addAttribute("basicPatientViewModels", basicPatientViewModels);
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        List<BasicPatientViewModel> basicPatientViewModels = this.patientService.getLoggedDoctorPatients(user);
+//        model.addAttribute("basicPatientViewModels", basicPatientViewModels);
 
         return "patients/all";
     }
@@ -113,6 +115,13 @@ public class PatientController {
         }
 
         return "redirect:/patients/add/" + egn;
+    }
+
+    @GetMapping("/searchAsync")
+    public ResponseEntity<List<BasicPatientViewModel>> search(@RequestParam String egn){
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<BasicPatientViewModel> toDoItemViewModels = this.patientService.searchByEgn(egn, loggedUser);
+        return new ResponseEntity(toDoItemViewModels, HttpStatus.OK);
     }
 
     @ExceptionHandler(PatientNotFoundException.class)
