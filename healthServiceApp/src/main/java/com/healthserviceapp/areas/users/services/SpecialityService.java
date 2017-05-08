@@ -1,5 +1,7 @@
 package com.healthserviceapp.areas.users.services;
 
+import com.healthserviceapp.areas.users.entities.Speciality;
+import com.healthserviceapp.areas.users.models.bindingModels.SpecialtyBindingModel;
 import com.healthserviceapp.areas.users.models.viewModels.BasicSpecialtyViewModel;
 import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
 
@@ -13,4 +15,6 @@ public interface SpecialityService {
     Set<SpecialityViewModel> getAllSpecialities();
 
     List<BasicSpecialtyViewModel> getAllSpecialitiesNames();
+
+    List<SpecialtyBindingModel> findByDoctorId(Long id);
 }

@@ -1,6 +1,7 @@
 package com.healthserviceapp.areas.users.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "specialities")
@@ -13,6 +14,9 @@ public class Speciality {
     private String code;
 
     private String name;
+
+    @ManyToMany(mappedBy = "specialities")
+    List<Doctor> doctors;
 
     public Speciality() {
     }
@@ -39,5 +43,13 @@ public class Speciality {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Doctor> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(List<Doctor> doctors) {
+        this.doctors = doctors;
     }
 }

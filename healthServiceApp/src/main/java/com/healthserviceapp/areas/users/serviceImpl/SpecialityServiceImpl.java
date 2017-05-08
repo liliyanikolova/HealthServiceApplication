@@ -1,6 +1,7 @@
 package com.healthserviceapp.areas.users.serviceImpl;
 
 import com.healthserviceapp.areas.users.entities.Speciality;
+import com.healthserviceapp.areas.users.models.bindingModels.SpecialtyBindingModel;
 import com.healthserviceapp.areas.users.models.viewModels.BasicSpecialtyViewModel;
 import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
 import com.healthserviceapp.areas.users.repositories.SpecialityRepository;
@@ -58,5 +59,17 @@ public class SpecialityServiceImpl implements SpecialityService{
         }
 
         return basicSpecialtyViewModels;
+    }
+
+    @Override
+    public List<SpecialtyBindingModel> findByDoctorId(Long id) {
+        List<Speciality> specialities = this.specialityRepository.findByDoctorId(id);
+        List<SpecialtyBindingModel> specialtyBindingModels = new LinkedList<>();
+        for (Speciality speciality : specialities) {
+            SpecialtyBindingModel specialtyBindingModel = this.modelMapper.map(speciality, SpecialtyBindingModel.class);
+            specialtyBindingModels.add(specialtyBindingModel);
+        }
+
+        return specialtyBindingModels;
     }
 }

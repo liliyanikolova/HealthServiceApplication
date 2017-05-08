@@ -6,6 +6,7 @@ import com.healthserviceapp.areas.users.exceptions.TitleNotFoundException;
 import com.healthserviceapp.areas.users.exceptions.UserNotFoundException;
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBindingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.RegisterDoctorBindingModel;
+import com.healthserviceapp.areas.users.models.bindingModels.SpecialtyBindingModel;
 import com.healthserviceapp.areas.users.models.bindingModels.TitleBindingModel;
 import com.healthserviceapp.areas.users.models.viewModels.SpecialityViewModel;
 import com.healthserviceapp.areas.users.models.viewModels.TitleViewModel;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -68,8 +70,15 @@ public class DoctorController {
     @GetMapping("/edit/{userId}")
     public String getEditUserPage(@PathVariable Long userId, Model model){
         EditDoctorBindingModel editDoctorBindingModel = this.userService.findDoctorById(userId);
+
         TitleBindingModel title = this.titleService.findByDoctorId(userId);
         editDoctorBindingModel.setTitle(title.getName());
+
+        List<SpecialtyBindingModel> specialtyBindingModels = this.specialityService.findByDoctorId(userId);
+        for (int i = 0; i < specialtyBindingModels.size(); i++) {
+            editDoctorBindingModel.getSpecialities()[i] = specialtyBindingModels.get(i).getName();
+        }
+
         model.addAttribute(editDoctorBindingModel);
 
         return "doctor-edit";
