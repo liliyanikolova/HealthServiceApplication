@@ -2,6 +2,7 @@ package com.healthserviceapp.areas.users.serviceImpl;
 
 import com.healthserviceapp.areas.common.utils.Constants;
 import com.healthserviceapp.areas.patient.entities.Patient;
+import com.healthserviceapp.areas.patient.exceptions.PatientNotFoundException;
 import com.healthserviceapp.areas.users.entities.*;
 import com.healthserviceapp.areas.users.exceptions.UserNotFoundException;
 import com.healthserviceapp.areas.users.models.bindingModels.EditDoctorBindingModel;
@@ -102,7 +103,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(EditDoctorBindingModel editDoctorBindingModel) {
+    public void saveChanges(EditDoctorBindingModel editDoctorBindingModel) {
         Doctor doctor = this.userRepository.findById(editDoctorBindingModel.getId());
         if (doctor == null){
             throw new UserNotFoundException();
@@ -116,10 +117,14 @@ public class UserServiceImpl implements UserService {
         doctor.addRole(role);
 
         Title title = this.titleRepository.findByName(editDoctorBindingModel.getTitle());
-        doctor.setTitle(title);
+        if (title != null){
+            doctor.setTitle(title);
+        }
 
         Set<Speciality> specialities = this.specialityRepository.findAllByNameIn(editDoctorBindingModel.getSpecialities());
-        doctor.setSpecialities(specialities);
+        if (specialities.size() != 0){
+            doctor.setSpecialities(specialities);
+        }
 
         this.userRepository.save(doctor);
     }
@@ -134,6 +139,11 @@ public class UserServiceImpl implements UserService {
         Set<Patient> patients = doctor.getPatients().stream()
                                     .filter(p -> p.getId() != patientId)
                                     .collect(Collectors.toSet());
+
+        if (patients ==null){
+            throw new PatientNotFoundException();
+        }
+
         doctor.setPatients(patients);
         this.userRepository.saveAndFlush(doctor);
     }

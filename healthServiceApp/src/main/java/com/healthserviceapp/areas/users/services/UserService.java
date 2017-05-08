@@ -13,7 +13,7 @@ public interface UserService extends UserDetailsService {
 
     EditDoctorBindingModel findDoctorById(Long id);
 
-    void save(EditDoctorBindingModel editDoctorBindingModel);
+    void saveChanges(EditDoctorBindingModel editDoctorBindingModel);
 
     void deletePatientById(Long patientId, User user);
 }

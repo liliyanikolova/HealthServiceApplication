@@ -35,7 +35,7 @@ public class RegisterDoctorBindingModel {
     @NotEmpty(message = "Въведете фамилия")
     private String lastName;
 
-    @NotEmpty(message = "Изперете поне една специалност")
+    @Size( min = 1, message = "Изперете поне една специалност")
     private String[] specialities;
 
     private byte[] profileImage;

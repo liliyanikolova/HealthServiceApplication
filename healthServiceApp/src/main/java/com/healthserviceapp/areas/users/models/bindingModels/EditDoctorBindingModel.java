@@ -12,7 +12,6 @@ public class EditDoctorBindingModel {
     @Size(min = 10, max = 10, message = "Невалиден УИН")
     private String uin;
 
-    @NotEmpty(message = "Изберете титла")
     private String title;
 
     @NotEmpty(message = "Въведете име")
@@ -21,7 +20,6 @@ public class EditDoctorBindingModel {
     @NotEmpty(message = "Въведете фамилия")
     private String lastName;
 
-    @NotEmpty(message = "Изперете поне една специалност")
     private String[] specialities;
 
     private byte[] profileImage;

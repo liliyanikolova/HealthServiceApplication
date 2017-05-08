@@ -29,10 +29,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/doctor/register/**", "/doctors-info/**").permitAll()
-                    .antMatchers("/bootstrap/**", "/jquery/**", "/css/**", "/images/**").permitAll()
-                    .antMatchers("/patients/**").hasRole("DOCTOR")
-                    .antMatchers("/protocols/**").hasRole("DOCTOR")
+                    .antMatchers("/", "/doctor/register/**", "/doctors-info/**", "/specialties").permitAll()
+                    .antMatchers("/bootstrap/**", "/jquery/**", "/css/**", "/images/**", "/scripts/**").permitAll()
+                    .antMatchers("/patients/**", "/protocols/**").hasRole("DOCTOR")
                     .antMatchers("/medicines/**").hasRole("ADMIN")
                     .antMatchers("/diagnoses/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
