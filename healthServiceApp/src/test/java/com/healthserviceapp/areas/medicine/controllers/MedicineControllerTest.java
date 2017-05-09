@@ -1,7 +1,6 @@
 package com.healthserviceapp.areas.medicine.controllers;
 
 import com.healthserviceapp.areas.medicine.customValidation.IsCodeUniqueValidator;
-import com.healthserviceapp.areas.medicine.entities.Medicine;
 import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.services.MedicineService;
 import org.junit.Before;
@@ -18,13 +17,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.validation.ConstraintValidatorContext;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(MedicineController.class)

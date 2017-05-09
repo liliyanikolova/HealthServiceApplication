@@ -38,8 +38,6 @@ public class RegisterDoctorBindingModel {
     @Size( min = 1, message = "Изперете поне една специалност")
     private String[] specialities;
 
-    private byte[] profileImage;
-
     public RegisterDoctorBindingModel() {
     }
 
@@ -107,11 +105,4 @@ public class RegisterDoctorBindingModel {
         this.specialities = specialities;
     }
 
-    public byte[] getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(byte[] profileImage) {
-        this.profileImage = profileImage;
-    }
 }

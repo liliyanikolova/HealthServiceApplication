@@ -41,30 +41,18 @@
         <small id="capHelp" class="form-control-feedback" th:each="error : ${#fields.errors('specialities')}" th:text="${error}">Error Message</small>
     </div>
 
-    <!--<div class="form-group">-->
-        <!--<label >Изберете профилна снимка</label>-->
-        <!--<div>-->
-            <!--<input type="file" class="btn btn-primary" name="file"/>-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--<label class="custom-file">-->
-        <!--<input type="file" id="file" class="custom-file-input"/>-->
-        <!--<span class="custom-file-control"></span>-->
-    <!--</label>-->
-
     <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-danger'">
-        <label class="form-control-label" for="inputUsername">Имейл адрес</label>
+        <label for="inputUsername">Имейл адрес</label>
         <input type="text" class="form-control form-control-danger" id="inputUsername" th:field="*{email}"/>
         <div class="form-control-feedback" th:each="error : ${#fields.errors('email')}" th:text="${error}">Sorry, that email's taken. Try another?</div>
     </div>
     <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-danger'">
-        <label class="form-control-label" for="inputPassword">Парола</label>
+        <label for="inputPassword">Парола</label>
         <input type="password" class="form-control form-control-danger" id="inputPassword"  autocomplete="off" th:field="*{password}"/>
         <div class="form-control-feedback" th:each="error : ${#fields.errors('password')}" th:text="${error}">Sorry, that password is incorrect?</div>
     </div>
     <div class="form-group" th:classappend="${#fields.hasErrors('global')} ? 'has-danger'">
-        <label class="form-control-label" for="inputConfirmPassword">Повтори парола</label>
+        <label for="inputConfirmPassword">Повтори парола</label>
         <input type="password" class="form-control form-control-danger" id="inputConfirmPassword" autocomplete="off" th:field="*{confirmPassword}"/>
         <div class="form-control-feedback" th:each="error : ${#fields.errors('global')}" th:text="${error}">Sorry, passwords are not matching?</div>
     </div>

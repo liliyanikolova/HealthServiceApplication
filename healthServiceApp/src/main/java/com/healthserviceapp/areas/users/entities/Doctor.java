@@ -28,9 +28,6 @@ public class Doctor extends User{
             inverseJoinColumns = @JoinColumn(name = "workplace_id", referencedColumnName = "id"))
     private Set<DoctorWorkplace> workplaces;
 
-    //TODO
-//    private ... picture;
-
     @ManyToMany
     @JoinTable(
             joinColumns = @JoinColumn(name = "doctor_id", referencedColumnName = "id"),

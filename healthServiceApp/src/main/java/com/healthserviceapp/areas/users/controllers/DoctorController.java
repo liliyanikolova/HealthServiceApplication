@@ -60,13 +60,10 @@ public class DoctorController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute RegisterDoctorBindingModel registerDoctorBindingModel, BindingResult bindingResult, @RequestParam() MultipartFile file) {
+    public String registerUser(@Valid @ModelAttribute RegisterDoctorBindingModel registerDoctorBindingModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "doctor-register";
         }
-
-        String a = file.getName();
-        System.out.println(file.getName());
 
         this.userService.register(registerDoctorBindingModel);
 

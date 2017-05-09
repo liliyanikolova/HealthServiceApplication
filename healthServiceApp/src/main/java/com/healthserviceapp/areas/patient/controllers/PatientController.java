@@ -69,7 +69,7 @@ public class PatientController {
     @PostMapping("/add/{egn}")
     public String addPatient(@PathVariable String egn, @Valid @ModelAttribute AddPatientBindingModel addPatientBindingModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "patients/add/" + egn;
+            return "patients/add";
         }
 
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -89,7 +89,7 @@ public class PatientController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editPatient(@Valid @ModelAttribute EditPatientBindingModel editPatientBindingModel, @PathVariable Long id, BindingResult bindingResult){
+    public String editPatient(@PathVariable Long id, @Valid @ModelAttribute EditPatientBindingModel editPatientBindingModel, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return "patients/edit";
         }
