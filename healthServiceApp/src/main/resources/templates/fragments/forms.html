@@ -41,12 +41,12 @@
         <small id="capHelp" class="form-control-feedback" th:each="error : ${#fields.errors('specialities')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group">
-        <label >Изберете профилна снимка</label>
-        <div>
-            <input type="file" class="btn btn-primary" name="file"/>
-        </div>
-    </div>
+    <!--<div class="form-group">-->
+        <!--<label >Изберете профилна снимка</label>-->
+        <!--<div>-->
+            <!--<input type="file" class="btn btn-primary" name="file"/>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <!--<label class="custom-file">-->
         <!--<input type="file" id="file" class="custom-file-input"/>-->
@@ -111,11 +111,11 @@
         <small id="capHelp" class="form-control-feedback" th:each="error : ${#fields.errors('specialities')}" th:text="${error}">Error Message</small>
     </div>
 
-    <div class="form-group" th:classappend="${#fields.hasErrors('profileImage')}? 'has-danger'">
-        <label for="imageId">Профилна снимка</label>
-        <input type="file" accept="image/*" class="form-control-file" id="imageId" aria-describedby="imageHelp" name="profileImage" th:field="*{profileImage}"/>
-        <small id="imageHelp" class="form-control-feedback" th:each="error : ${#fields.errors('profileImage')}" th:text="${error}">Error Message</small>
-    </div>
+    <!--<div class="form-group" th:classappend="${#fields.hasErrors('profileImage')}? 'has-danger'">-->
+        <!--<label for="imageId">Профилна снимка</label>-->
+        <!--<input type="file" accept="image/*" class="form-control-file" id="imageId" aria-describedby="imageHelp" name="profileImage" th:field="*{profileImage}"/>-->
+        <!--<small id="imageHelp" class="form-control-feedback" th:each="error : ${#fields.errors('profileImage')}" th:text="${error}">Error Message</small>-->
+    <!--</div>-->
 
     <button type="submit" class="btn btn-success">Запази</button>
     <a class="btn btn-warning" th:href="|/|">Откажи</a>

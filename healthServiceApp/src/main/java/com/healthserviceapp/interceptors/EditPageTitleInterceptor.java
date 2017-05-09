@@ -13,12 +13,21 @@ public class EditPageTitleInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        String pageTitle = (String) modelAndView.getModelMap().get("title");
-        String newTitle = PageTitles.APPLICATION_NAME;
-        if (pageTitle != null){
-            newTitle += " - " + pageTitle;
-        }
+        //boolean asyncCall = request.getRequestURI().toLowerCase().contains("async");
 
-        modelAndView.addObject("title", newTitle);
+        if(modelAndView == null ){ return; }
+
+        boolean ajax = "XMLHttpRequest".equals(
+                request.getHeader("X-Requested-With"));
+
+        if (!ajax) {
+            String pageTitle = (String) modelAndView.getModelMap().get("title");
+            String newTitle = PageTitles.APPLICATION_NAME;
+            if (pageTitle != null) {
+                newTitle += " - " + pageTitle;
+            }
+
+            modelAndView.addObject("title", newTitle);
+        }
     }
 }
