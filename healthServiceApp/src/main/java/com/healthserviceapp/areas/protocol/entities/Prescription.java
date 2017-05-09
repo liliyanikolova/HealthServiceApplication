@@ -16,7 +16,7 @@ public class Prescription {
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
 
-    private Double doze;
+    private Integer doze;
 
     @ManyToOne
     @JoinColumn(name = "protocol_id")
@@ -41,11 +41,11 @@ public class Prescription {
         this.medicine = medicine;
     }
 
-    public Double getDoze() {
+    public Integer getDoze() {
         return doze;
     }
 
-    public void setDoze(Double doze) {
+    public void setDoze(Integer doze) {
         this.doze = doze;
     }
 }

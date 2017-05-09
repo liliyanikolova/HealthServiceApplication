@@ -12,8 +12,4 @@ public class HealthServiceAppStarterApplication {
 		SpringApplication.run(HealthServiceAppStarterApplication.class, args);
 	}
 
-	@Bean
-	public ModelMapper getModelMapper(){
-		return new ModelMapper();
-	}
 }

@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.users.controllers;
 
+import com.healthserviceapp.areas.common.utils.PageTitles;
 import com.healthserviceapp.areas.users.entities.Title;
 import com.healthserviceapp.areas.users.entities.User;
 import com.healthserviceapp.areas.users.exceptions.TitleNotFoundException;
@@ -29,14 +30,18 @@ import java.util.Set;
 @RequestMapping("/doctor")
 public class DoctorController {
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private SpecialityService specialityService;
 
-    @Autowired
     private TitleService titleService;
+
+    @Autowired
+    public DoctorController(UserService userService, SpecialityService specialityService, TitleService titleService) {
+        this.userService = userService;
+        this.specialityService = specialityService;
+        this.titleService = titleService;
+    }
 
     @ModelAttribute("titles")
     public Set<TitleViewModel> titles(){
@@ -49,7 +54,8 @@ public class DoctorController {
     }
 
     @GetMapping("/register")
-    public String getRegisterPage(@ModelAttribute RegisterDoctorBindingModel registerDoctorBindingModel) {
+    public String getRegisterPage(@ModelAttribute RegisterDoctorBindingModel registerDoctorBindingModel, Model model) {
+        model.addAttribute("title", PageTitles.REGISTER_DOCTOR);
         return "doctor-register";
     }
 
@@ -67,8 +73,11 @@ public class DoctorController {
         return "redirect:/";
     }
 
-    @GetMapping("/edit/{userId}")
-    public String getEditUserPage(@PathVariable Long userId, Model model){
+    @GetMapping("/edit")
+    public String getEditUserPage(Model model){
+        model.addAttribute("title", PageTitles.EDIT_DOCTOR);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = user.getId();
         EditDoctorBindingModel editDoctorBindingModel = this.userService.findDoctorById(userId);
 
         TitleBindingModel title = this.titleService.findByDoctorId(userId);
@@ -84,12 +93,14 @@ public class DoctorController {
         return "doctor-edit";
     }
 
-    @PostMapping("/edit/{userId}")
-    public String editUser(@PathVariable Long userId, @Valid @ModelAttribute EditDoctorBindingModel editDoctorBindingModel, BindingResult bindingResult){
+    @PostMapping("/edit")
+    public String editUser(@Valid @ModelAttribute EditDoctorBindingModel editDoctorBindingModel, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "doctor-edit";
         }
 
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = user.getId();
         editDoctorBindingModel.setId(userId);
         this.userService.saveChanges(editDoctorBindingModel);
         return "redirect:/";

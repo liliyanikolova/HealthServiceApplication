@@ -6,6 +6,7 @@ import com.healthserviceapp.areas.medicine.exceptions.MedicineNotFoundException;
 import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.models.bindingModels.EditMedicineBindingModel;
 import com.healthserviceapp.areas.medicine.models.viewModels.BasicMedicineViewModel;
+import com.healthserviceapp.areas.medicine.models.viewModels.MedicineViewModel;
 import com.healthserviceapp.areas.medicine.repositories.DozeRepository;
 import com.healthserviceapp.areas.medicine.repositories.MedicineRepository;
 import com.healthserviceapp.areas.medicine.services.MedicineService;
@@ -154,6 +155,30 @@ public class MedicineServiceImpl implements MedicineService{
         Long id = medicine.getId();
 
         return id;
+    }
+
+    @Override
+    public List<MedicineViewModel> getMedicines() {
+        List<Medicine> medicines = this.medicineRepository.findAll();
+        List<MedicineViewModel> medicineViewModels = new LinkedList<>();
+        for (Medicine medicine : medicines) {
+            MedicineViewModel medicineViewModel = new MedicineViewModel();
+            medicineViewModel.setId(medicine.getId());
+            medicineViewModel.setCode(medicine.getCode());
+            medicineViewModel.setName(medicine.getName());
+            medicineViewModel.setMeasurement(medicine.getDozes().get(0).getMeasurement());
+
+            Integer[] dozesQuantities = new Integer[medicine.getDozes().size()];
+            for (int i = 0; i < dozesQuantities.length; i++) {
+                dozesQuantities[i] = medicine.getDozes().get(i).getQuantity();
+            }
+
+            medicineViewModel.setDozes(dozesQuantities);
+
+            medicineViewModels.add(medicineViewModel);
+        }
+
+        return medicineViewModels;
     }
 
 }

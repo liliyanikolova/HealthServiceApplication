@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Add Medicine</title>
+    <title th:text="${title}">Add Protocol</title>
     <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
           th:href="@{/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="../../static/css/site.css" th:href="@{/css/site.css}"/>
@@ -13,9 +13,9 @@
 <main>
     <br/>
     <div class="container">
-        <h1>Добавяне на ново лекарство</h1>
+        <h1>Създаване на нов протокол</h1>
         <br/>
-        <form th:replace="medicines/forms::search-form"></form>
+        <form th:replace="protocols/forms::add-form"></form>
         <br/>
     </div>
 </main>

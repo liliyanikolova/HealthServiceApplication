@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.users.controllers;
 
+import com.healthserviceapp.areas.common.utils.PageTitles;
 import com.healthserviceapp.areas.users.errors.Errors;
 import com.healthserviceapp.areas.users.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String getLoginPage(@RequestParam(required = false) String error, Model model){
+        model.addAttribute("title", PageTitles.LOGIN);
         if(error != null){
             model.addAttribute("error", Errors.INVALID_CREDENTIALS);
         }

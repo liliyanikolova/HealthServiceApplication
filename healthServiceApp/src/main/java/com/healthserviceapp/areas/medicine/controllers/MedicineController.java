@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.medicine.controllers;
 
+import com.healthserviceapp.areas.common.utils.PageTitles;
 import com.healthserviceapp.areas.medicine.exceptions.DozeNotFoundException;
 import com.healthserviceapp.areas.medicine.exceptions.MedicineNotFoundException;
 import com.healthserviceapp.areas.medicine.models.bindingModels.AddMedicineBindingModel;
@@ -30,6 +31,7 @@ public class MedicineController {
 
     @GetMapping("")
     public String getAllMedicines(Model model){
+        model.addAttribute("title", PageTitles.ALL_MEDICINES);
         List<BasicMedicineViewModel> basicMedicineViewModels = this.medicineService.getAllMedicines();
         model.addAttribute("basicMedicineViewModels", basicMedicineViewModels);
 
@@ -37,7 +39,8 @@ public class MedicineController {
     }
 
     @GetMapping("/add")
-    public String getAddMedicinePage(@ModelAttribute AddMedicineBindingModel addMedicineBindingModel){
+    public String getAddMedicinePage(@ModelAttribute AddMedicineBindingModel addMedicineBindingModel, Model model){
+        model.addAttribute("title", PageTitles.ADD_MEDICINE);
         return "medicines/add";
     }
 
@@ -61,6 +64,7 @@ public class MedicineController {
 
     @GetMapping("/edit/{id}")
     public String getEditMedicinePage(@PathVariable Long id, Model model){
+        model.addAttribute("title", PageTitles.EDIT_MEDICINE);
         EditMedicineBindingModel editMedicineBindingModel = this.medicineService.findMedicineById(id);
         model.addAttribute(editMedicineBindingModel);
 

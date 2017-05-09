@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.patient.controllers;
 
+import com.healthserviceapp.areas.common.utils.PageTitles;
 import com.healthserviceapp.areas.patient.exceptions.PatientNotFoundException;
 import com.healthserviceapp.areas.patient.models.bindingModels.AddPatientBindingModel;
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
@@ -35,12 +36,13 @@ public class PatientController {
 //        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        List<BasicPatientViewModel> basicPatientViewModels = this.patientService.getLoggedDoctorPatients(user);
 //        model.addAttribute("basicPatientViewModels", basicPatientViewModels);
-
+        model.addAttribute("title", PageTitles.ALL_PATIENTS);
         return "patients/all";
     }
 
     @GetMapping("/add")
-    public String getAddPatientPage(@ModelAttribute AddPatientBindingModel addPatientBindingModel){
+    public String getAddPatientPage(@ModelAttribute AddPatientBindingModel addPatientBindingModel, Model model){
+        model.addAttribute("title", PageTitles.ADD_PATIENT);
         return "patients/add";
     }
 
@@ -58,7 +60,8 @@ public class PatientController {
     }
 
     @GetMapping("/add/{egn}")
-    public String getAddPatientPage(@PathVariable String egn, @ModelAttribute AddPatientBindingModel addPatientBindingModel){
+    public String getAddPatientPage(@PathVariable String egn, @ModelAttribute AddPatientBindingModel addPatientBindingModel, Model model){
+        model.addAttribute("title", PageTitles.ADD_PATIENT);
         addPatientBindingModel.setEgn(egn);
         return "patients/add";
     }
@@ -78,6 +81,7 @@ public class PatientController {
 
     @GetMapping("/edit/{id}")
     public String getEditPatientPage(@PathVariable Long id, Model model){
+        model.addAttribute("title", PageTitles.EDIT_PATIENT);
         EditPatientBindingModel editPatientBindingModel = this.patientService.findPatientById(id);
         model.addAttribute(editPatientBindingModel);
 
@@ -98,7 +102,8 @@ public class PatientController {
     }
 
     @GetMapping("/search")
-    public String getSearchPatientPage(@ModelAttribute SearchPatientBindingModel searchPatientBindingModel){
+    public String getSearchPatientPage(@ModelAttribute SearchPatientBindingModel searchPatientBindingModel, Model model){
+        model.addAttribute("title", PageTitles.ADD_PATIENT);
         return "patients/search";
     }
 

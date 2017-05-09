@@ -54,6 +54,18 @@
                     </div>
                 </li>
             </div>
+            <div sec:authorize="hasRole('DOCTOR')">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/protocols" id="navbarProtocolsDropdownMenu"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Протоколи
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarProtocolsDropdownMenu">
+                        <a class="dropdown-item" th:href="@{/protocols}">Покажи всички</a>
+                        <a class="dropdown-item" th:href="@{/protocols/add}">Добави нов</a>
+                    </div>
+                </li>
+            </div>
         </ul>
 
         <ul class="nav navbar-nav">
@@ -75,7 +87,7 @@
                     Лекарства
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarMedicinesDropdownMenu" >
-                    <a class="dropdown-item" th:href="@{/doctor/edit/{id}(id=${#authentication.getPrincipal().getId()})}">Редактирай профил</a>
+                    <a class="dropdown-item" th:href="@{/doctor/edit}">Редактирай профил</a>
                 </div>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">

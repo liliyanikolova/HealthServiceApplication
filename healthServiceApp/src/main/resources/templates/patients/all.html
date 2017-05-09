@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>All Patients</title>
+    <title th:text="${title}">All Patients</title>
     <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css"
           th:href="@{/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="../../static/css/site.css" th:href="@{/css/site.css}"/>
@@ -32,17 +32,7 @@
             </tr>
             </thead>
             <tbody id="patientsList">
-            <tr th:each="basicPatientViewModel : ${basicPatientViewModels}" th:object="${basicPatientViewModel}">
-                <td th:text="*{egn}">ЕГН</td>
-                <td th:text="*{firstName}">Име</td>
-                <td th:text="*{lastName}">Фамилия</td>
-                <td>
-                    <a class="btn btn-warning" th:href="|/patients/edit/*{id}|">Редактирай</a>
-                </td>
-                <td>
-                    <a class="btn btn-warning" onClick="if(!confirm('Сигурни ли сте?')) {return false;}" th:href="|/doctor/delete/patient/*{id}|">Изтрий</a>
-                </td>
-            </tr>
+
             </tbody>
         </table>
     </div>

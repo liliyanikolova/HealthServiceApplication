@@ -1,5 +1,6 @@
 package com.healthserviceapp.areas.protocol.controllers;
 
+import com.healthserviceapp.areas.common.utils.PageTitles;
 import com.healthserviceapp.areas.patient.models.bindingModels.EditPatientBindingModel;
 import com.healthserviceapp.areas.protocol.exceptions.DiagnosisNotFoundException;
 import com.healthserviceapp.areas.protocol.models.bindingModels.AddDiagnosisBindingModel;
@@ -30,6 +31,7 @@ public class DiagnosisController {
 
     @GetMapping("")
     public String getAllDiagnoses(Model model){
+        model.addAttribute("title", PageTitles.ALL_DIAGNOSES);
         List<BasicDiagnosisViewModel> basicDiagnosisViewModels = this.diagnosisService.getAllDiagnoses();
         model.addAttribute("basicDiagnosisViewModels", basicDiagnosisViewModels);
 
@@ -37,7 +39,8 @@ public class DiagnosisController {
     }
 
     @GetMapping("/add")
-    public String getAddDiagnosisPage(@ModelAttribute AddDiagnosisBindingModel addDiagnosisBindingModel){
+    public String getAddDiagnosisPage(@ModelAttribute AddDiagnosisBindingModel addDiagnosisBindingModel, Model model){
+        model.addAttribute("title", PageTitles.ADD_DIAGNOSIS);
         return "diagnoses/add";
     }
 
@@ -61,6 +64,7 @@ public class DiagnosisController {
 
     @GetMapping("/edit/{id}")
     public String getEditDignosisPage(@PathVariable Long id, Model model){
+        model.addAttribute("title", PageTitles.EDIT_DIAGNOSIS);
         EditDiagnosisBindingModel editDiagnosisBindingModel = this.diagnosisService.findDiagnosisById(id);
         model.addAttribute(editDiagnosisBindingModel);
 
