@@ -6,9 +6,9 @@ import com.healthserviceapp.areas.medicine.repositories.DozeRepository;
 import com.healthserviceapp.areas.medicine.services.DozeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class DozeServiceImpl implements DozeService{
+public class DozeServiceImpl implements DozeService {
 
-    private DozeRepository dozeRepository;
+    private final DozeRepository dozeRepository;
 
     @Autowired
     public DozeServiceImpl(DozeRepository dozeRepository) {

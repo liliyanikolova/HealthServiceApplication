@@ -11,4 +11,7 @@ public class Messages {
     public static final String DIAGNOSIS_CODE_EXIST = "Вече има диагноза с този код";
 
     public static final String PROTOCOL_CODE_EXIST = "Вече има диагноза с този код";
+
+    private Messages() {
+    }
 }

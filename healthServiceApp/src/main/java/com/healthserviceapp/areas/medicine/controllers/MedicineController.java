@@ -22,7 +22,7 @@ import java.util.Map;
 @RequestMapping("/medicines")
 public class MedicineController {
 
-    private MedicineService medicineService;
+    private final MedicineService medicineService;
 
     @Autowired
     public MedicineController(MedicineService medicineService) {

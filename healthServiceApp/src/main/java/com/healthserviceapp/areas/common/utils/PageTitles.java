@@ -29,4 +29,7 @@ public class PageTitles {
 
     //Protocols
     public static final String ADD_PROTOCOL = "Създаване на протокол";
+
+    private PageTitles() {
+    }
 }

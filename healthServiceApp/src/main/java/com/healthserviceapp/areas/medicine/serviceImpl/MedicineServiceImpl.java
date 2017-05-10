@@ -36,11 +36,8 @@ public class MedicineServiceImpl implements MedicineService{
     @Override
     public boolean doesCodeExist(String code) {
         Medicine medicine = this.medicineRepository.findByCode(code);
-        if (medicine != null){
-            return true;
-        }
+        return medicine != null;
 
-        return false;
     }
 
     @Override

@@ -8,4 +8,6 @@ public class Constants {
 
     public static final String DEFAULT_GREETING_NAME = "Администратор";
 
+    private Constants() {
+    }
 }

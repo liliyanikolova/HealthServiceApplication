@@ -20,10 +20,7 @@ public class IsCodeUniqueValidator implements ConstraintValidator<IsCodeUnique, 
 
     public boolean isValid(Object code, ConstraintValidatorContext context) {
 
-        if (code instanceof String) {
-            return !this.medicineService.doesCodeExist(((String) code));
-        }
+        return !(code instanceof String) || !this.medicineService.doesCodeExist(((String) code));
 
-        return true;
     }
 }
